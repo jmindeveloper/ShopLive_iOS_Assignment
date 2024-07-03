@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 final class SearchCharacterViewController: UIViewController {
+    
+    // MARK: - ViewProperties
     private let searchCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         
@@ -22,6 +24,7 @@ final class SearchCharacterViewController: UIViewController {
         setSubViews()
     }
     
+    // MARK: - setSubViews
     private func setSubViews() {
         [searchCollectionView].forEach {
             view.addSubview($0)
@@ -34,5 +37,16 @@ final class SearchCharacterViewController: UIViewController {
         searchCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+}
+
+// MARK: - SearchCharacterViewController
+extension SearchCharacterViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        return UICollectionViewCell()
     }
 }
