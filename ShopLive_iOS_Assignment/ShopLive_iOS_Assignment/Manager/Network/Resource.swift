@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Resource<T: Codable> {
+struct Resource {
     private var base: String
     private var path: String
     private var params: [String: String]
