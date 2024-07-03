@@ -17,7 +17,7 @@
 		0E5A1D312C35778C003CE36C /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D302C35778C003CE36C /* MainTabbarController.swift */; };
 		0E5A1D332C35780D003CE36C /* SearchCharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D322C35780D003CE36C /* SearchCharacterViewController.swift */; };
 		0E5A1D352C35781E003CE36C /* FavoriteCharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D342C35781E003CE36C /* FavoriteCharacterViewController.swift */; };
-		0E5A1D382C3581B3003CE36C /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D372C3581B3003CE36C /* Character.swift */; };
+		0E5A1D382C3581B3003CE36C /* MarvelCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D372C3581B3003CE36C /* MarvelCharacter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,7 +53,7 @@
 		0E5A1D302C35778C003CE36C /* MainTabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabbarController.swift; sourceTree = "<group>"; };
 		0E5A1D322C35780D003CE36C /* SearchCharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCharacterViewController.swift; sourceTree = "<group>"; };
 		0E5A1D342C35781E003CE36C /* FavoriteCharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCharacterViewController.swift; sourceTree = "<group>"; };
-		0E5A1D372C3581B3003CE36C /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		0E5A1D372C3581B3003CE36C /* MarvelCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelCharacter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,7 +146,7 @@
 		0E5A1D362C3581AC003CE36C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0E5A1D372C3581B3003CE36C /* Character.swift */,
+				0E5A1D372C3581B3003CE36C /* MarvelCharacter.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -284,7 +284,7 @@
 				0E5A1D352C35781E003CE36C /* FavoriteCharacterViewController.swift in Sources */,
 				0E5A1CFF2C357285003CE36C /* AppDelegate.swift in Sources */,
 				0E5A1D312C35778C003CE36C /* MainTabbarController.swift in Sources */,
-				0E5A1D382C3581B3003CE36C /* Character.swift in Sources */,
+				0E5A1D382C3581B3003CE36C /* MarvelCharacter.swift in Sources */,
 				0E5A1D332C35780D003CE36C /* SearchCharacterViewController.swift in Sources */,
 				0E5A1D012C357285003CE36C /* SceneDelegate.swift in Sources */,
 			);
