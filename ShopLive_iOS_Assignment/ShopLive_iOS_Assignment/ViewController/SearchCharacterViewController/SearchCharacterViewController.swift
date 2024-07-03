@@ -50,6 +50,7 @@ final class SearchCharacterViewController: UIViewController {
         navigationItem.title = "Search"
         setSubViews()
         connectTarget()
+        binding()
     }
     
     private func binding() {
@@ -110,7 +111,7 @@ final class SearchCharacterViewController: UIViewController {
 // MARK: - SearchCharacterViewController
 extension SearchCharacterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return characterMockData.count
+        return viewModel.marvelCharacters.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -121,7 +122,7 @@ extension SearchCharacterViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.configureView(model: characterMockData[indexPath.row])
+        cell.configureView(model: viewModel.marvelCharacters[indexPath.row])
         
         return cell
     }
