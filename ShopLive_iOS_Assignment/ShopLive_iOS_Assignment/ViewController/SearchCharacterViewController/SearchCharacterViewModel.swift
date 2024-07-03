@@ -50,12 +50,16 @@ final class SearchCharacterViewModel {
     }
     
     // MARK: - Method
-    func getMarvelCharacters(query: String) {
+    
+    /// query가 비었
+    func getMarvelCharacters(query: String? = nil) {
         let ts = String(Date().timeIntervalSince1970)
         guard let hashKey = getAPICallHash(ts),
               let publicKey = Bundle.main.PUBLIC_KEY else {
             return
         }
+        
+        let query = query == nil ? searchCharacterName : query!
         
         let resource = Resource(
             base: "https://gateway.marvel.com:443",
