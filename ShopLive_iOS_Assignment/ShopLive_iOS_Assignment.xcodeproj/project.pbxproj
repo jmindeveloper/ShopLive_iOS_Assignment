@@ -24,6 +24,8 @@
 		0E5A1D452C359034003CE36C /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D442C359034003CE36C /* View+.swift */; };
 		0E5A1D482C3598BB003CE36C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D472C3598BB003CE36C /* NetworkManager.swift */; };
 		0E5A1D4B2C359944003CE36C /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D4A2C359944003CE36C /* Resource.swift */; };
+		0E5A1D4D2C35A6AD003CE36C /* SearchCharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D4C2C35A6AD003CE36C /* SearchCharacterViewModel.swift */; };
+		0E5A1D4F2C35AC6C003CE36C /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D4E2C35AC6C003CE36C /* Bundle+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,8 @@
 		0E5A1D442C359034003CE36C /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		0E5A1D472C3598BB003CE36C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		0E5A1D4A2C359944003CE36C /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
+		0E5A1D4C2C35A6AD003CE36C /* SearchCharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCharacterViewModel.swift; sourceTree = "<group>"; };
+		0E5A1D4E2C35AC6C003CE36C /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +174,7 @@
 			children = (
 				0E5A1D402C358B6F003CE36C /* View */,
 				0E5A1D322C35780D003CE36C /* SearchCharacterViewController.swift */,
+				0E5A1D4C2C35A6AD003CE36C /* SearchCharacterViewModel.swift */,
 			);
 			path = SearchCharacterViewController;
 			sourceTree = "<group>";
@@ -186,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				0E5A1D442C359034003CE36C /* View+.swift */,
+				0E5A1D4E2C35AC6C003CE36C /* Bundle+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -352,7 +358,9 @@
 				0E5A1CFF2C357285003CE36C /* AppDelegate.swift in Sources */,
 				0E5A1D312C35778C003CE36C /* MainTabbarController.swift in Sources */,
 				0E5A1D452C359034003CE36C /* View+.swift in Sources */,
+				0E5A1D4D2C35A6AD003CE36C /* SearchCharacterViewModel.swift in Sources */,
 				0E5A1D382C3581B3003CE36C /* MarvelCharacter.swift in Sources */,
+				0E5A1D4F2C35AC6C003CE36C /* Bundle+.swift in Sources */,
 				0E5A1D332C35780D003CE36C /* SearchCharacterViewController.swift in Sources */,
 				0E5A1D012C357285003CE36C /* SceneDelegate.swift in Sources */,
 			);
