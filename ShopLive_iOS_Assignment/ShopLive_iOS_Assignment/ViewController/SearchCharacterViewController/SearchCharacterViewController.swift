@@ -49,52 +49,18 @@ final class SearchCharacterViewController: UIViewController {
     private func searchCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = .init(top: 0, leading: 3, bottom: 10, trailing: 3) // 아이템 간의 세로 간격 추가
+        item.contentInsets = .init(top: 0, leading: 3, bottom: 10, trailing: 3)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10) // 섹션 간의 간격 설정
+        section.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         
         return layout
     }
-
-
-    
-//    private func searchCollectionViewLayout() -> UICollectionViewCompositionalLayout {
-//        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
-//        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//        item.contentInsets = .init(top: 0, leading: 3, bottom: 0, trailing: 3)
-//        
-//        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
-//        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-//        
-//        let section = NSCollectionLayoutSection(group: group)
-//        section.contentInsets = .init(top: 10, leading: 10, bottom: 0, trailing: 10)
-//        
-//        let layout = UICollectionViewCompositionalLayout(section: section)
-//        
-//        return layout
-//    }
-
-//    private func searchCollectionViewLayout() -> UICollectionViewCompositionalLayout {
-//        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .estimated(200))
-//        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-//        item.contentInsets = .init(top: 0, leading: 3, bottom: 0, trailing: 3)
-//        
-//        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(200))
-//        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-//        
-//        let section = NSCollectionLayoutSection(group: group)
-//        section.contentInsets = .init(top: 10, leading: 10, bottom: 0, trailing: 10)
-//        
-//        let layout =  UICollectionViewCompositionalLayout(section: section)
-//        
-//        return layout
-//    }
 }
 
 // MARK: - SearchCharacterViewController

@@ -22,6 +22,8 @@
 		0E5A1D3E2C358940003CE36C /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5A1D3D2C358940003CE36C /* SDWebImage */; };
 		0E5A1D422C358B8D003CE36C /* CharacterCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D412C358B8D003CE36C /* CharacterCardCollectionViewCell.swift */; };
 		0E5A1D452C359034003CE36C /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D442C359034003CE36C /* View+.swift */; };
+		0E5A1D482C3598BB003CE36C /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D472C3598BB003CE36C /* NetworkManager.swift */; };
+		0E5A1D4B2C359944003CE36C /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D4A2C359944003CE36C /* Resource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		0E5A1D372C3581B3003CE36C /* MarvelCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelCharacter.swift; sourceTree = "<group>"; };
 		0E5A1D412C358B8D003CE36C /* CharacterCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		0E5A1D442C359034003CE36C /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
+		0E5A1D472C3598BB003CE36C /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		0E5A1D4A2C359944003CE36C /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,7 @@
 		0E5A1CFD2C357285003CE36C /* ShopLive_iOS_Assignment */ = {
 			isa = PBXGroup;
 			children = (
+				0E5A1D462C3598B3003CE36C /* Manager */,
 				0E5A1D432C35902E003CE36C /* Extension */,
 				0E5A1D362C3581AC003CE36C /* Model */,
 				0E5A1D2F2C357781003CE36C /* ViewController */,
@@ -183,6 +188,23 @@
 				0E5A1D442C359034003CE36C /* View+.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		0E5A1D462C3598B3003CE36C /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				0E5A1D492C359938003CE36C /* Network */,
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
+		0E5A1D492C359938003CE36C /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				0E5A1D472C3598BB003CE36C /* NetworkManager.swift */,
+				0E5A1D4A2C359944003CE36C /* Resource.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -323,8 +345,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E5A1D482C3598BB003CE36C /* NetworkManager.swift in Sources */,
 				0E5A1D352C35781E003CE36C /* FavoriteCharacterViewController.swift in Sources */,
 				0E5A1D422C358B8D003CE36C /* CharacterCardCollectionViewCell.swift in Sources */,
+				0E5A1D4B2C359944003CE36C /* Resource.swift in Sources */,
 				0E5A1CFF2C357285003CE36C /* AppDelegate.swift in Sources */,
 				0E5A1D312C35778C003CE36C /* MainTabbarController.swift in Sources */,
 				0E5A1D452C359034003CE36C /* View+.swift in Sources */,

@@ -18,7 +18,7 @@ struct MarvelCharacterAPIData: Codable {
 
 /// 실제 사용하는 캐릭터 모델
 struct MarvelCharacter: Codable {
-    let id: String
+    let id: Int
     let name: String
     let description: String
     let thumbnail: Thumbnail
@@ -30,8 +30,8 @@ struct Thumbnail: Codable {
 }
 
 let characterMockData = [
-    MarvelCharacter(id: "1", name: "아이언맨", description: "짱쌘 아이언맨", thumbnail: Thumbnail(path: "mock_image", extension: "")),
-    MarvelCharacter(id: "1", name: "스파이더맨", description: "우리들의 친절한 이웃 스파이더맨", thumbnail: Thumbnail(path: "mock_image", extension: "")),
-    MarvelCharacter(id: "1", name: "캡틴아메리카", description: "블루스컬", thumbnail: Thumbnail(path: "mock_image", extension: "")),
-    MarvelCharacter(id: "1", name: "토르", description: "망치의 신", thumbnail: Thumbnail(path: "mock_image", extension: "")),
+    MarvelCharacter(id: 1, name: "아이언맨", description: "짱쌘 아이언맨", thumbnail: Thumbnail(path: "mock_image", extension: "")),
+    MarvelCharacter(id: 1, name: "스파이더맨", description: "우리들의 친절한 이웃 스파이더맨", thumbnail: Thumbnail(path: "mock_image", extension: "")),
+    MarvelCharacter(id: 1, name: "캡틴아메리카", description: "블루스컬", thumbnail: Thumbnail(path: "mock_image", extension: "")),
+    MarvelCharacter(id: 1, name: "토르", description: "망치의 신", thumbnail: Thumbnail(path: "mock_image", extension: "")),
 ]
