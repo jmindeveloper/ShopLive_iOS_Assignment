@@ -11,8 +11,14 @@ import SnapKit
 final class SearchCharacterViewController: UIViewController {
     
     // MARK: - ViewProperties
-    private let searchCollectionView: UICollectionView = {
+    private lazy var searchCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.register(
+            CharacterCardCollectionViewCell.self,
+            forCellWithReuseIdentifier: CharacterCardCollectionViewCell.identifier
+        )
+        
+        collectionView.dataSource = self
         
         return collectionView
     }()
@@ -43,10 +49,19 @@ final class SearchCharacterViewController: UIViewController {
 // MARK: - SearchCharacterViewController
 extension SearchCharacterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return characterMockData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CharacterCardCollectionViewCell.identifier,
+            for: indexPath
+        ) as? CharacterCardCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        cell.configureView(model: characterMockData[indexPath.row])
+        
+        return cell
     }
 }
