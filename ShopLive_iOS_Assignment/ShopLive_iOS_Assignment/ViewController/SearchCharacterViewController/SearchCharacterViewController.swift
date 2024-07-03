@@ -20,6 +20,7 @@ final class SearchCharacterViewController: UIViewController {
         )
         
         collectionView.dataSource = self
+        collectionView.delegate = self
         
         return collectionView
     }()
@@ -128,6 +129,16 @@ extension SearchCharacterViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+extension SearchCharacterViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row + 1 == viewModel.marvelCharacters.count {
+            viewModel.getMarvelCharacters()
+        }
+    }
+}
+
+// MARK: - SearchCharacterViewController
 extension SearchCharacterViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
