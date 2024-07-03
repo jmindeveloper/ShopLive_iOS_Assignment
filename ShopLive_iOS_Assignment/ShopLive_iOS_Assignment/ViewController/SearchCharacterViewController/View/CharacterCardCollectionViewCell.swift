@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 final class CharacterCardCollectionViewCell: UICollectionViewCell {
     static let identifier = "CharacterCardCollectionViewCell"
@@ -21,9 +22,9 @@ final class CharacterCardCollectionViewCell: UICollectionViewCell {
     
     private let thumbnailImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .red
         imageView.layer.cornerRadius = 12
         imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
         
         return imageView
     }()
@@ -86,7 +87,9 @@ final class CharacterCardCollectionViewCell: UICollectionViewCell {
     
     func configureView(model: MarvelCharacter) {
         // TODO: - 추후 비동기코드로 변경
-        thumbnailImageView.image = UIImage(named: model.thumbnail.path)
+        if let imageURL = URL(string: "\(model.thumbnail.path).\(model.thumbnail.extension)") {
+            thumbnailImageView.sd_setImage(with: imageURL)
+        }
         titleLabel.text = model.name
         descriptionLabel.text = model.description
     }
