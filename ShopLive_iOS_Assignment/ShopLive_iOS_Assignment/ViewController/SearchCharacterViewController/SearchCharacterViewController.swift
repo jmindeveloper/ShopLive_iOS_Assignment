@@ -20,8 +20,24 @@ final class SearchCharacterViewController: UIViewController {
         )
         
         collectionView.dataSource = self
+        collectionView.delegate = self
         
         return collectionView
+    }()
+    
+    private lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "검색"
+        searchBar.autocapitalizationType = .sentences
+        searchBar.autocorrectionType = .no
+        searchBar.spellCheckingType = .no
+        searchBar.returnKeyType = .default
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.searchTextField.textColor = .black
+        searchBar.returnKeyType = .done
+        searchBar.searchTextField.delegate = self
+        
+        return searchBar
     }()
     
     // MARK: - Properties
@@ -34,10 +50,8 @@ final class SearchCharacterViewController: UIViewController {
         view.backgroundColor = .white
         navigationItem.title = "Search"
         setSubViews()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.viewModel.getMarvelCharacters()
-        }
+        connectTarget()
+        binding()
     }
     
     private func binding() {
@@ -49,7 +63,7 @@ final class SearchCharacterViewController: UIViewController {
     
     // MARK: - setSubViews
     private func setSubViews() {
-        [searchCollectionView].forEach {
+        [searchCollectionView, searchBar].forEach {
             view.addSubview($0)
         }
         
@@ -57,9 +71,24 @@ final class SearchCharacterViewController: UIViewController {
     }
     
     private func setConstraints() {
-        searchCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        searchBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(4)
+            $0.horizontalEdges.equalToSuperview().inset(12)
         }
+        
+        searchCollectionView.snp.makeConstraints {
+            $0.horizontalEdges.bottom.equalToSuperview()
+            $0.top.equalTo(searchBar.snp.bottom).offset(2)
+        }
+    }
+    
+    // MARK: - ConnectTarget
+    private func connectTarget() {
+        searchBar.searchTextField.addTarget(self, action: #selector(searchBarEditingChanged(_:)), for: .editingChanged)
+    }
+    
+    @objc private func searchBarEditingChanged(_ sender: UITextField) {
+        viewModel.searchCharacterName = sender.text ?? ""
     }
     
     // MARK: - CompositionalLayout
@@ -83,7 +112,7 @@ final class SearchCharacterViewController: UIViewController {
 // MARK: - SearchCharacterViewController
 extension SearchCharacterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return characterMockData.count
+        return viewModel.marvelCharacters.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -94,8 +123,25 @@ extension SearchCharacterViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.configureView(model: characterMockData[indexPath.row])
+        cell.configureView(model: viewModel.marvelCharacters[indexPath.row])
         
         return cell
+    }
+}
+
+// MARK: - UICollectionViewDelegate
+extension SearchCharacterViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row + 1 == viewModel.marvelCharacters.count {
+            viewModel.getMarvelCharacters()
+        }
+    }
+}
+
+// MARK: - SearchCharacterViewController
+extension SearchCharacterViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

@@ -18,11 +18,11 @@ final class SearchCharacterViewModel {
     
     var marvelCharacters: [MarvelCharacter] = [] {
         didSet {
-            pagenationCount += 10
+            pagenationCount += 9
             collectionViewUpdatePublisher.send()
         }
     }
-    var searchCharacterName: String = ""
+    @Published var searchCharacterName: String = ""
     let collectionViewUpdatePublisher = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
     
@@ -32,25 +32,40 @@ final class SearchCharacterViewModel {
     
     private func binding() {
         networkManager.characterPublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] characters in
                 self?.marvelCharacters.append(contentsOf: characters)
                 print(characters.map { $0.name })
             }.store(in: &subscriptions)
+        
+        $searchCharacterName
+            .debounce(for: 0.3, scheduler: DispatchQueue.main)
+            .sink { [weak self] text in
+                if text.count >= 2 {
+                    self?.pagenationCount = 0
+                    self?.marvelCharacters.removeAll()
+                    self?.getMarvelCharacters(query: text)
+                }
+            }.store(in: &subscriptions)
     }
     
     // MARK: - Method
-    func getMarvelCharacters() {
+    
+    /// query가 비었
+    func getMarvelCharacters(query: String? = nil) {
         let ts = String(Date().timeIntervalSince1970)
         guard let hashKey = getAPICallHash(ts),
               let publicKey = Bundle.main.PUBLIC_KEY else {
             return
         }
         
+        let query = query == nil ? searchCharacterName : query!
+        
         let resource = Resource(
             base: "https://gateway.marvel.com:443",
             path: "/v1/public/characters",
             params: [
-                "nameStartsWith": searchCharacterName,
+                "nameStartsWith": query,
                 "ts": ts,
                 "apikey": publicKey,
                 "hash": hashKey,
