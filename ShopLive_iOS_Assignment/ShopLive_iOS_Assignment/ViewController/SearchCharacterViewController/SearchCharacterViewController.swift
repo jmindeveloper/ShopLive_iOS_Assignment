@@ -24,6 +24,21 @@ final class SearchCharacterViewController: UIViewController {
         return collectionView
     }()
     
+    private lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "검색"
+        searchBar.autocapitalizationType = .sentences
+        searchBar.autocorrectionType = .no
+        searchBar.spellCheckingType = .no
+        searchBar.returnKeyType = .default
+        searchBar.searchTextField.borderStyle = .none
+        searchBar.searchTextField.textColor = .black
+        searchBar.returnKeyType = .done
+        searchBar.searchTextField.delegate = self
+        
+        return searchBar
+    }()
+    
     // MARK: - Properties
     private let viewModel = SearchCharacterViewModel()
     private var subscriptions = Set<AnyCancellable>()
@@ -49,7 +64,7 @@ final class SearchCharacterViewController: UIViewController {
     
     // MARK: - setSubViews
     private func setSubViews() {
-        [searchCollectionView].forEach {
+        [searchCollectionView, searchBar].forEach {
             view.addSubview($0)
         }
         
@@ -57,8 +72,14 @@ final class SearchCharacterViewController: UIViewController {
     }
     
     private func setConstraints() {
+        searchBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(4)
+            $0.horizontalEdges.equalToSuperview().inset(12)
+        }
+        
         searchCollectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.horizontalEdges.bottom.equalToSuperview()
+            $0.top.equalTo(searchBar.snp.bottom).offset(2)
         }
     }
     
@@ -97,5 +118,12 @@ extension SearchCharacterViewController: UICollectionViewDataSource {
         cell.configureView(model: characterMockData[indexPath.row])
         
         return cell
+    }
+}
+
+extension SearchCharacterViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
