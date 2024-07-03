@@ -7,14 +7,33 @@
 
 import UIKit
 
-final class MainTabbarController: UIViewController {
+final class MainTabbarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTabbar()
     }
     
-    private func configureTabbar() {
+    private func setNavigationControllerItem(vc: UIViewController, title: String, image: UIImage) -> UINavigationController {
+        let naviVC = UINavigationController(rootViewController: vc)
+        vc.tabBarItem.title = title
+        vc.tabBarItem.image = image
         
+        return naviVC
+    }
+    
+    private func configureTabbar() {
+        let searchVC = setNavigationControllerItem(
+            vc: SearchCharacterViewController(),
+            title: "Search",
+            image: UIImage(systemName: "magnifyingglass") ?? UIImage()
+        )
+        let favoriteVC = setNavigationControllerItem(
+            vc: SearchCharacterViewController(),
+            title: "Search",
+            image: UIImage(systemName: "star") ?? UIImage()
+        )
+        
+        setViewControllers([searchVC, favoriteVC], animated: true)
     }
 }
