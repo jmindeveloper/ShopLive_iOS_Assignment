@@ -20,6 +20,8 @@
 		0E5A1D382C3581B3003CE36C /* MarvelCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D372C3581B3003CE36C /* MarvelCharacter.swift */; };
 		0E5A1D3B2C358932003CE36C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5A1D3A2C358932003CE36C /* SnapKit */; };
 		0E5A1D3E2C358940003CE36C /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 0E5A1D3D2C358940003CE36C /* SDWebImage */; };
+		0E5A1D422C358B8D003CE36C /* CharacterCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D412C358B8D003CE36C /* CharacterCardCollectionViewCell.swift */; };
+		0E5A1D452C359034003CE36C /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D442C359034003CE36C /* View+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		0E5A1D322C35780D003CE36C /* SearchCharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCharacterViewController.swift; sourceTree = "<group>"; };
 		0E5A1D342C35781E003CE36C /* FavoriteCharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCharacterViewController.swift; sourceTree = "<group>"; };
 		0E5A1D372C3581B3003CE36C /* MarvelCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelCharacter.swift; sourceTree = "<group>"; };
+		0E5A1D412C358B8D003CE36C /* CharacterCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		0E5A1D442C359034003CE36C /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +112,7 @@
 		0E5A1CFD2C357285003CE36C /* ShopLive_iOS_Assignment */ = {
 			isa = PBXGroup;
 			children = (
+				0E5A1D432C35902E003CE36C /* Extension */,
 				0E5A1D362C3581AC003CE36C /* Model */,
 				0E5A1D2F2C357781003CE36C /* ViewController */,
 				0E5A1CFE2C357285003CE36C /* AppDelegate.swift */,
@@ -140,8 +145,8 @@
 		0E5A1D2F2C357781003CE36C /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0E5A1D3F2C358B62003CE36C /* SearchCharacterViewController */,
 				0E5A1D302C35778C003CE36C /* MainTabbarController.swift */,
-				0E5A1D322C35780D003CE36C /* SearchCharacterViewController.swift */,
 				0E5A1D342C35781E003CE36C /* FavoriteCharacterViewController.swift */,
 			);
 			path = ViewController;
@@ -153,6 +158,31 @@
 				0E5A1D372C3581B3003CE36C /* MarvelCharacter.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		0E5A1D3F2C358B62003CE36C /* SearchCharacterViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0E5A1D402C358B6F003CE36C /* View */,
+				0E5A1D322C35780D003CE36C /* SearchCharacterViewController.swift */,
+			);
+			path = SearchCharacterViewController;
+			sourceTree = "<group>";
+		};
+		0E5A1D402C358B6F003CE36C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0E5A1D412C358B8D003CE36C /* CharacterCardCollectionViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0E5A1D432C35902E003CE36C /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				0E5A1D442C359034003CE36C /* View+.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,8 +324,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E5A1D352C35781E003CE36C /* FavoriteCharacterViewController.swift in Sources */,
+				0E5A1D422C358B8D003CE36C /* CharacterCardCollectionViewCell.swift in Sources */,
 				0E5A1CFF2C357285003CE36C /* AppDelegate.swift in Sources */,
 				0E5A1D312C35778C003CE36C /* MainTabbarController.swift in Sources */,
+				0E5A1D452C359034003CE36C /* View+.swift in Sources */,
 				0E5A1D382C3581B3003CE36C /* MarvelCharacter.swift in Sources */,
 				0E5A1D332C35780D003CE36C /* SearchCharacterViewController.swift in Sources */,
 				0E5A1D012C357285003CE36C /* SceneDelegate.swift in Sources */,
