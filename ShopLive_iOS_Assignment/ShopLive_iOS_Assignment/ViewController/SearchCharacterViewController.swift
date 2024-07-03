@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  SearchCharacterViewController.swift
 //  ShopLive_iOS_Assignment
 //
 //  Created by J_Min on 7/3/24.
@@ -7,13 +7,11 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+final class SearchCharacterViewController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        view.backgroundColor = .white
     }
-
-
+    
 }
-
