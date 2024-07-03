@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 final class SearchCharacterViewController: UIViewController {
     
@@ -23,11 +24,27 @@ final class SearchCharacterViewController: UIViewController {
         return collectionView
     }()
     
+    // MARK: - Properties
+    private let viewModel = SearchCharacterViewModel()
+    private var subscriptions = Set<AnyCancellable>()
+    
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationItem.title = "Search"
         setSubViews()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.viewModel.getMarvelCharacters()
+        }
+    }
+    
+    private func binding() {
+        viewModel.collectionViewUpdatePublisher
+            .sink { [weak self] in
+                self?.searchCollectionView.reloadData()
+            }.store(in: &subscriptions)
     }
     
     // MARK: - setSubViews
