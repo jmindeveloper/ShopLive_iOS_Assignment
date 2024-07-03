@@ -49,10 +49,7 @@ final class SearchCharacterViewController: UIViewController {
         view.backgroundColor = .white
         navigationItem.title = "Search"
         setSubViews()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.viewModel.getMarvelCharacters()
-        }
+        connectTarget()
     }
     
     private func binding() {
@@ -81,6 +78,15 @@ final class SearchCharacterViewController: UIViewController {
             $0.horizontalEdges.bottom.equalToSuperview()
             $0.top.equalTo(searchBar.snp.bottom).offset(2)
         }
+    }
+    
+    // MARK: - ConnectTarget
+    private func connectTarget() {
+        searchBar.searchTextField.addTarget(self, action: #selector(searchBarEditingChanged(_:)), for: .editingChanged)
+    }
+    
+    @objc private func searchBarEditingChanged(_ sender: UITextField) {
+        viewModel.searchCharacterName = sender.text ?? ""
     }
     
     // MARK: - CompositionalLayout
