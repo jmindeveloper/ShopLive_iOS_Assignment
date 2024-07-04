@@ -39,7 +39,9 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
     
     var marvelCharacters: [MarvelCharacter] = [] {
         didSet {
-            pagenationCount += 9
+            if !marvelCharacters.isEmpty {
+                pagenationCount += 10
+            }
             collectionViewUpdatePublisher.send()
         }
     }

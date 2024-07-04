@@ -95,4 +95,12 @@ final class CharacterCardCollectionViewCell: UICollectionViewCell {
         titleLabel.text = model.name
         descriptionLabel.text = model.description
     }
+    
+    func configureView(coreDataModel: FavoriteMarvelCharacter) {
+        if let imageData = coreDataModel.thumbnail {
+            thumbnailImageView.image = UIImage(data: imageData)
+        }
+        titleLabel.text = coreDataModel.name
+        descriptionLabel.text = coreDataModel.characterDescription
+    }
 }

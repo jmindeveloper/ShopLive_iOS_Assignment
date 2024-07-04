@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 final class FavoriteCharacterViewController: UIViewController {
     
     // MARK: - ViewProperties
-    private lazy var searchCollectionView: UICollectionView = {
+    private lazy var favoriteCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: favoriteCollectionViewLayout())
         collectionView.register(
             CharacterCardCollectionViewCell.self,
@@ -23,6 +24,20 @@ final class FavoriteCharacterViewController: UIViewController {
         return collectionView
     }()
     
+    // MARK: - Properties
+    private var viewModel: FavoriteCharacterViewModel
+    private var subscriptions = Set<AnyCancellable>()
+    
+    // MARK: - LifeCycle
+    init(viewModel: FavoriteCharacterViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -32,12 +47,15 @@ final class FavoriteCharacterViewController: UIViewController {
     }
     
     private func binding() {
-        
+        viewModel.collectionViewUpdatePublisher
+            .sink { [weak self] in
+                self?.favoriteCollectionView.reloadData()
+            }.store(in: &subscriptions)
     }
     
     // MARK: - setSubViews
     private func setSubViews() {
-        [searchCollectionView].forEach {
+        [favoriteCollectionView].forEach {
             view.addSubview($0)
         }
         
@@ -45,7 +63,7 @@ final class FavoriteCharacterViewController: UIViewController {
     }
     
     private func setConstraints() {
-        searchCollectionView.snp.makeConstraints {
+        favoriteCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
@@ -72,7 +90,7 @@ final class FavoriteCharacterViewController: UIViewController {
 // MARK: - UICollectionViewDataSource
 extension FavoriteCharacterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return characterMockData.count
+        return viewModel.favoriteMarvelCharacters.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -83,10 +101,7 @@ extension FavoriteCharacterViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.configureView(
-            model: characterMockData[indexPath.row],
-            isFavorite: false
-        )
+        cell.configureView(coreDataModel: viewModel.favoriteMarvelCharacters[indexPath.row])
         
         return cell
     }
@@ -94,5 +109,7 @@ extension FavoriteCharacterViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension FavoriteCharacterViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.deleteFavoriteMarvelCharacter(index: indexPath.row)
+    }
 }
