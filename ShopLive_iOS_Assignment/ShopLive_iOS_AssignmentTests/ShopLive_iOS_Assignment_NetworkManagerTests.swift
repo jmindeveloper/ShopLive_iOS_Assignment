@@ -14,12 +14,19 @@ import Combine
 final class ShopLive_iOS_Assignment_NetworkManagerTests: XCTestCase {
     var networkManager: NetworkManager!
     var mockSession: MockURLSession!
-    private var subscriptions = Set<AnyCancellable>()
+    var resource: Resource!
+    var subscriptions: Set<AnyCancellable>!
     
     override func setUp() {
         super.setUp()
         mockSession = MockURLSession()
         networkManager = NetworkManager(session: mockSession)
+        resource = Resource(
+            base: "https://example.com",
+            path: "",
+            params: [:]
+        )
+        subscriptions = Set<AnyCancellable>()
     }
     
     override func tearDown() {
@@ -57,12 +64,6 @@ final class ShopLive_iOS_Assignment_NetworkManagerTests: XCTestCase {
             headerFields: nil
         )
         
-        let resource = Resource(
-            base: "https://example.com",
-            path: "",
-            params: [:]
-        )
-        
         // When
         do {
             try networkManager.getMarvelCharacters(resource: resource)
@@ -84,12 +85,6 @@ final class ShopLive_iOS_Assignment_NetworkManagerTests: XCTestCase {
         // Given
         mockSession.data = nil
         
-        let resource = Resource(
-            base: "https://example.com",
-            path: "",
-            params: [:]
-        )
-        
         // When
         do {
             try networkManager.getMarvelCharacters(resource: resource)
@@ -103,15 +98,56 @@ final class ShopLive_iOS_Assignment_NetworkManagerTests: XCTestCase {
         // Given
         mockSession.error = URLError(.badURL)
         
-        let resource = Resource(
-            base: "https://example.com",
-            path: "",
-            params: [:]
-        )
-        
         // When
         do {
             try networkManager.getMarvelCharacters(resource: resource)
+        } catch {
+            // Then
+            XCTAssertEqual(error as? URLError, URLError(.badURL))
+        }
+    }
+    
+    func test_getImageDataSuccess() async throws {
+        // Given
+        let imageData = "image_data".data(using: .utf8)
+        mockSession.data = imageData
+        
+        mockSession.response = HTTPURLResponse(
+            url: URL(string: "https://example.com")!,
+            statusCode: 200,
+            httpVersion: nil,
+            headerFields: nil
+        )
+        
+        // When
+        let data = try await networkManager.getImageData(url: URL(string: "https://example.com"))
+        
+        // Then
+        XCTAssertEqual(data, imageData)
+    }
+    
+    func test_getImageDataFailure_badServerResponse() async throws {
+        // Given
+        mockSession.data = nil
+        
+        // When
+        do {
+            let data = try await networkManager.getImageData(url: URL(string: "https://example.com"))
+            XCTFail()
+        } catch {
+            // Then
+            XCTAssertEqual(error as? URLError, URLError(.badServerResponse))
+        }
+    }
+    
+    func test_getImageDataFailure_badURL() async throws {
+        // Given
+        mockSession.error = URLError(.badURL)
+        
+        // When
+        do {
+            let data = try await networkManager.getImageData(url: URL(string: "https://example.com"))
+            XCTFail()
         } catch {
             // Then
             XCTAssertEqual(error as? URLError, URLError(.badURL))
