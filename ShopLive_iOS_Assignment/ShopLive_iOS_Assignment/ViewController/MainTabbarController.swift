@@ -23,8 +23,12 @@ final class MainTabbarController: UITabBarController {
     }
     
     private func configureTabbar() {
+        let networkManager = NetworkManager()
+        let coreDataManager = CoreDataManager()
+        let searchVM = SearchCharacterViewModel(networkManager: networkManager, coreDataManager: coreDataManager)
+        
         let searchVC = setNavigationControllerItem(
-            vc: SearchCharacterViewController(),
+            vc: SearchCharacterViewController(viewModel: searchVM),
             title: "Search",
             image: UIImage(systemName: "magnifyingglass") ?? UIImage()
         )
@@ -33,6 +37,8 @@ final class MainTabbarController: UITabBarController {
             title: "Favorite",
             image: UIImage(systemName: "star") ?? UIImage()
         )
+        
+        coreDataManager.getFavoriteCharacter()
         
         setViewControllers([searchVC, favoriteVC], animated: true)
     }
