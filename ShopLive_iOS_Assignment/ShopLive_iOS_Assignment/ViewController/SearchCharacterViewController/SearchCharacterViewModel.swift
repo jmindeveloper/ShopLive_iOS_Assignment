@@ -34,6 +34,7 @@ final class SearchCharacterViewModel {
     
     init() {
         binding()
+        coreDataManager.getFavoriteCharacter()
     }
     
     private func binding() {
@@ -41,7 +42,13 @@ final class SearchCharacterViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] characters in
                 self?.marvelCharacters.append(contentsOf: characters)
-                print(characters.map { $0.name })
+                print(characters.map { $0.id })
+            }.store(in: &subscriptions)
+        
+        coreDataManager.favoriteCharacterPublisher
+            .sink { [weak self] characters in
+                print(characters.count)
+                self?.favoriteMarvelCharacters = characters
             }.store(in: &subscriptions)
         
         $searchCharacterName
@@ -117,7 +124,10 @@ final class SearchCharacterViewModel {
                     thumbnail: imageData
                 )
                 
-                coreDataManager.saveFavoriteCharacter(entity: characterEntity)
+                DispatchQueue.main.async { [weak self] in
+                    self?.coreDataManager.saveFavoriteCharacter(entity: characterEntity)
+                }
+                
             } catch {
                 print(error.localizedDescription)
             }

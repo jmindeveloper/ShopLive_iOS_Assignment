@@ -136,6 +136,10 @@ extension SearchCharacterViewController: UICollectionViewDelegate {
             viewModel.getMarvelCharacters()
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.tapMarvelCharacterCardAction(index: indexPath.row)
+    }
 }
 
 // MARK: - SearchCharacterViewController
