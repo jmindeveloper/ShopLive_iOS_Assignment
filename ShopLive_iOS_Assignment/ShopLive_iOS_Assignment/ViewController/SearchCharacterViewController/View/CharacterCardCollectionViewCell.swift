@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import Lottie
 
 final class CharacterCardCollectionViewCell: UICollectionViewCell {
     static let identifier = "CharacterCardCollectionViewCell"
@@ -27,6 +28,14 @@ final class CharacterCardCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         
         return imageView
+    }()
+    
+    private let loadingAnimationView: LottieAnimationView = {
+        let view = LottieAnimationView(name: "loading_animation_lottie")
+        view.loopMode = .loop
+        view.backgroundColor = .clear
+        
+        return view
     }()
     
     private let titleLabel: UILabel = {
@@ -57,7 +66,8 @@ final class CharacterCardCollectionViewCell: UICollectionViewCell {
     
     // MARK: - setSubViews
     private func setSubViews() {
-        [shadowView, thumbnailImageView, titleLabel, descriptionLabel].forEach {
+        [shadowView, thumbnailImageView, loadingAnimationView,
+         titleLabel, descriptionLabel].forEach {
             contentView.addSubview($0)
         }
         
@@ -74,6 +84,11 @@ final class CharacterCardCollectionViewCell: UICollectionViewCell {
             $0.height.equalTo(thumbnailImageView.snp.width).multipliedBy(0.6)
         }
         
+        loadingAnimationView.snp.makeConstraints {
+            $0.center.equalTo(thumbnailImageView)
+            $0.size.equalTo(80)
+        }
+        
         titleLabel.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(8)
             $0.top.equalTo(thumbnailImageView.snp.bottom).offset(4)
@@ -86,9 +101,12 @@ final class CharacterCardCollectionViewCell: UICollectionViewCell {
     }
     
     func configureView(model: MarvelCharacter, isFavorite: Bool) {
-        // TODO: - 추후 비동기코드로 변경
+        loadingAnimationView.play()
         if let imageURL = URL(string: "\(model.thumbnail.path).\(model.thumbnail.extension)") {
-            thumbnailImageView.sd_setImage(with: imageURL)
+            thumbnailImageView.sd_setImage(with: imageURL) { [weak self] _, _, _, _ in
+                self?.loadingAnimationView.stop()
+                self?.loadingAnimationView.isHidden = true
+            }
         }
         
         contentView.backgroundColor = isFavorite ? .systemGray2 : .white
@@ -102,5 +120,10 @@ final class CharacterCardCollectionViewCell: UICollectionViewCell {
         }
         titleLabel.text = coreDataModel.name
         descriptionLabel.text = coreDataModel.characterDescription
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        loadingAnimationView.isHidden = false
     }
 }

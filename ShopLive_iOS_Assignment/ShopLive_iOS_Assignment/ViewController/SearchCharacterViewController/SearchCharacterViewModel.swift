@@ -13,7 +13,9 @@ protocol SearchCharacterViewModelProtocol {
     var marvelCharacters: [MarvelCharacter] { get set }
     var favoriteMarvelCharacters: [FavoriteMarvelCharacter] { get set }
     var searchCharacterName: String { get set }
-    var collectionViewUpdatePublisher: PassthroughSubject<Void, Never> { get }
+    var collectionViewUpdatePublisher: PassthroughSubject<Int?, Never> { get }
+    var isSavingFavoriteCharacterPublisher: PassthroughSubject<Bool, Never> { get }
+    var isFetchingCharacters: Bool { get set }
     
     init(networkManager: NetworkManagerProtocol, coreDataManager: CoreDataManagerProtocol)
     
@@ -36,22 +38,25 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
     private var pagenationCount = 0
     private let apiCallLimitCount = 10
     private var isDonePagenation: Bool = false
+    var isFetchingCharacters: Bool = false
     
     var marvelCharacters: [MarvelCharacter] = [] {
         didSet {
             if !marvelCharacters.isEmpty {
                 pagenationCount += 10
             }
-            collectionViewUpdatePublisher.send()
+            isFetchingCharacters = false
+            collectionViewUpdatePublisher.send(nil)
         }
     }
     var favoriteMarvelCharacters: [FavoriteMarvelCharacter] = [] {
         didSet {
-            collectionViewUpdatePublisher.send()
+            collectionViewUpdatePublisher.send(nil)
         }
     }
     @Published var searchCharacterName: String = ""
-    let collectionViewUpdatePublisher = PassthroughSubject<Void, Never>()
+    let collectionViewUpdatePublisher = PassthroughSubject<Int?, Never>()
+    let isSavingFavoriteCharacterPublisher = PassthroughSubject<Bool, Never>()
     private var subscriptions = Set<AnyCancellable>()
     
     init(networkManager: NetworkManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
@@ -68,12 +73,10 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
                 if characters.isEmpty {
                     self?.isDonePagenation = true
                 }
-                print(characters.map { $0.id })
             }.store(in: &subscriptions)
         
         coreDataManager.favoriteCharacterPublisher
             .sink { [weak self] characters in
-                print(characters.count)
                 self?.favoriteMarvelCharacters = characters
             }.store(in: &subscriptions)
         
@@ -94,6 +97,8 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
     /// query가 비었
     func getMarvelCharacters(query: String? = nil) {
         if isDonePagenation { return }
+        isFetchingCharacters = true
+        collectionViewUpdatePublisher.send(1)
         let ts = String(Date().timeIntervalSince1970)
         guard let hashKey = getAPICallHash(ts),
               let publicKey = Bundle.main.PUBLIC_KEY else {
@@ -141,6 +146,9 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
         let character = marvelCharacters[index]
         Task {
             do {
+                DispatchQueue.main.async { [weak self] in
+                    self?.isSavingFavoriteCharacterPublisher.send(true)
+                }
                 let imageURL = URL(string: "\(character.thumbnail.path).\(character.thumbnail.extension)")
                 let imageData = try await networkManager.getImageData(url: imageURL)
                 
@@ -154,6 +162,7 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
                 
                 DispatchQueue.main.async { [weak self] in
                     self?.coreDataManager.saveFavoriteCharacter(entity: characterEntity)
+                    self?.isSavingFavoriteCharacterPublisher.send(false)
                 }
                 
             } catch {
