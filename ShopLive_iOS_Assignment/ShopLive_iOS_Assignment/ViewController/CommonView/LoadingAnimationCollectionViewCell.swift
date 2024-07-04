@@ -40,6 +40,7 @@ final class LoadingAnimationCollectionViewCell: UICollectionViewCell {
         loadingAnimationView.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.verticalEdges.equalToSuperview().inset(4)
+            $0.size.equalTo(60)
         }
     }
     
@@ -47,8 +48,14 @@ final class LoadingAnimationCollectionViewCell: UICollectionViewCell {
         loadingAnimationView.stop()
     }
     
-    func start() {
+    func startAnimation() {
+        loadingAnimationView.isHidden = false
         loadingAnimationView.play()
+    }
+    
+    func stopAnimation() {
+        loadingAnimationView.isHidden = true
+        loadingAnimationView.stop()
     }
 }
 

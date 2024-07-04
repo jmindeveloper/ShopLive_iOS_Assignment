@@ -20,6 +20,11 @@ final class SearchCharacterViewController: UIViewController {
             forCellWithReuseIdentifier: CharacterCardCollectionViewCell.identifier
         )
         
+        collectionView.register(
+            LoadingAnimationCollectionViewCell.self,
+            forCellWithReuseIdentifier: LoadingAnimationCollectionViewCell.identifier
+        )
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         
@@ -77,8 +82,12 @@ final class SearchCharacterViewController: UIViewController {
     
     private func binding() {
         viewModel.collectionViewUpdatePublisher
-            .sink { [weak self] in
-                self?.searchCollectionView.reloadData()
+            .sink { [weak self] section in
+                if let section = section {
+                    self?.searchCollectionView.reloadSections(IndexSet((section...section)))
+                } else {
+                    self?.searchCollectionView.reloadData()
+                }
             }.store(in: &subscriptions)
         
         viewModel.isSavingFavoriteCharacterPublisher
@@ -128,8 +137,8 @@ final class SearchCharacterViewController: UIViewController {
     }
     
     // MARK: - CompositionalLayout
-    private func searchCollectionViewLayout() -> UICollectionViewCompositionalLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0))
+    private func characterCellLayoutSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: 0, leading: 3, bottom: 10, trailing: 3)
         
@@ -139,34 +148,87 @@ final class SearchCharacterViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(top: 10, leading: 10, bottom: 10, trailing: 10)
         
-        let layout = UICollectionViewCompositionalLayout(section: section)
+        return section
+    }
+    
+    private func loadingAnimationCellLayoutSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        return layout
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(68))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
+    }
+    
+    private func searchCollectionViewLayout() -> UICollectionViewCompositionalLayout {
+        UICollectionViewCompositionalLayout { [weak self] section, _ -> NSCollectionLayoutSection? in
+            guard let self = self else {
+                return nil
+            }
+            switch section {
+            case 0:
+                return characterCellLayoutSection()
+            case 1:
+                return loadingAnimationCellLayoutSection()
+            default:
+                return nil
+            }
+        }
     }
 }
 
 // MARK: - SearchCharacterViewController
 extension SearchCharacterViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.marvelCharacters.count
+        switch section {
+        case 0: return viewModel.marvelCharacters.count
+        case 1: return viewModel.isFetchingCharacters ? 1 : 0
+        default: return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: CharacterCardCollectionViewCell.identifier,
-            for: indexPath
-        ) as? CharacterCardCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        
-        cell.configureView(
-            model: viewModel.marvelCharacters[indexPath.row],
-            isFavorite: viewModel.checkExistInFavoriteCharacter(
-                index: indexPath.row
+        switch indexPath.section {
+        case 0:
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: CharacterCardCollectionViewCell.identifier,
+                for: indexPath
+            ) as? CharacterCardCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            
+            cell.configureView(
+                model: viewModel.marvelCharacters[indexPath.row],
+                isFavorite: viewModel.checkExistInFavoriteCharacter(
+                    index: indexPath.row
+                )
             )
-        )
-        
-        return cell
+            
+            return cell
+        case 1:
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: LoadingAnimationCollectionViewCell.identifier,
+                for: indexPath
+            ) as? LoadingAnimationCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            
+            if viewModel.isFetchingCharacters {
+                cell.startAnimation()
+            } else {
+                cell.stopAnimation()
+            }
+            
+            return cell
+        default: return UICollectionViewCell()
+        }
     }
 }
 
