@@ -14,6 +14,7 @@ protocol SearchCharacterViewModelProtocol {
     var favoriteMarvelCharacters: [FavoriteMarvelCharacter] { get set }
     var searchCharacterName: String { get set }
     var collectionViewUpdatePublisher: PassthroughSubject<Void, Never> { get }
+    var isSavingFavoriteCharacterPublisher: PassthroughSubject<Bool, Never> { get }
     
     init(networkManager: NetworkManagerProtocol, coreDataManager: CoreDataManagerProtocol)
     
@@ -52,6 +53,7 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
     }
     @Published var searchCharacterName: String = ""
     let collectionViewUpdatePublisher = PassthroughSubject<Void, Never>()
+    let isSavingFavoriteCharacterPublisher = PassthroughSubject<Bool, Never>()
     private var subscriptions = Set<AnyCancellable>()
     
     init(networkManager: NetworkManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
@@ -141,6 +143,9 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
         let character = marvelCharacters[index]
         Task {
             do {
+                DispatchQueue.main.async { [weak self] in
+                    self?.isSavingFavoriteCharacterPublisher.send(true)
+                }
                 let imageURL = URL(string: "\(character.thumbnail.path).\(character.thumbnail.extension)")
                 let imageData = try await networkManager.getImageData(url: imageURL)
                 
@@ -154,6 +159,7 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
                 
                 DispatchQueue.main.async { [weak self] in
                     self?.coreDataManager.saveFavoriteCharacter(entity: characterEntity)
+                    self?.isSavingFavoriteCharacterPublisher.send(false)
                 }
                 
             } catch {

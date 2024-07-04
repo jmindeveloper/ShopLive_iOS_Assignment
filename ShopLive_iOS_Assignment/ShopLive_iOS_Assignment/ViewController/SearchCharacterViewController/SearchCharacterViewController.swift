@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Combine
+import Lottie
 
 final class SearchCharacterViewController: UIViewController {
     
@@ -40,6 +41,17 @@ final class SearchCharacterViewController: UIViewController {
         return searchBar
     }()
     
+    private let loadingAnimationView: LottieAnimationView = {
+        let view = LottieAnimationView(name: "loading_animation_lottie")
+        view.loopMode = .loop
+        view.backgroundColor = .clear
+        view.isHidden = true
+        
+        return view
+    }()
+    
+    
+    
     // MARK: - Properties
     private var viewModel: SearchCharacterViewModelProtocol
     private var subscriptions = Set<AnyCancellable>()
@@ -68,11 +80,21 @@ final class SearchCharacterViewController: UIViewController {
             .sink { [weak self] in
                 self?.searchCollectionView.reloadData()
             }.store(in: &subscriptions)
+        
+        viewModel.isSavingFavoriteCharacterPublisher
+            .sink { [weak self] isSaving in
+                self?.loadingAnimationView.isHidden = !isSaving
+                if isSaving {
+                    self?.loadingAnimationView.play()
+                } else {
+                    self?.loadingAnimationView.stop()
+                }
+            }.store(in: &subscriptions)
     }
     
     // MARK: - setSubViews
     private func setSubViews() {
-        [searchCollectionView, searchBar].forEach {
+        [searchCollectionView, loadingAnimationView, searchBar].forEach {
             view.addSubview($0)
         }
         
@@ -88,6 +110,11 @@ final class SearchCharacterViewController: UIViewController {
         searchCollectionView.snp.makeConstraints {
             $0.horizontalEdges.bottom.equalToSuperview()
             $0.top.equalTo(searchBar.snp.bottom).offset(2)
+        }
+        
+        loadingAnimationView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+            $0.size.equalTo(80)
         }
     }
     
