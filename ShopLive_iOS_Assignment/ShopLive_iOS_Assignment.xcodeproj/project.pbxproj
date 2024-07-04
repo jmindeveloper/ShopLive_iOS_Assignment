@@ -30,6 +30,7 @@
 		0E5A1D562C364789003CE36C /* FavoriteMarvelCharacter+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D542C364789003CE36C /* FavoriteMarvelCharacter+CoreDataClass.swift */; };
 		0E5A1D572C364789003CE36C /* FavoriteMarvelCharacter+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D552C364789003CE36C /* FavoriteMarvelCharacter+CoreDataProperties.swift */; };
 		0E5A1D592C364898003CE36C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D582C364898003CE36C /* CoreDataManager.swift */; };
+		0E5A1D5C2C366834003CE36C /* FavoriteCharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D5B2C366834003CE36C /* FavoriteCharacterViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		0E5A1D542C364789003CE36C /* FavoriteMarvelCharacter+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteMarvelCharacter+CoreDataClass.swift"; sourceTree = "<group>"; };
 		0E5A1D552C364789003CE36C /* FavoriteMarvelCharacter+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteMarvelCharacter+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		0E5A1D582C364898003CE36C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		0E5A1D5B2C366834003CE36C /* FavoriteCharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCharacterViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,9 +164,9 @@
 		0E5A1D2F2C357781003CE36C /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0E5A1D5A2C36681E003CE36C /* FavoriteCharacterViewController */,
 				0E5A1D3F2C358B62003CE36C /* SearchCharacterViewController */,
 				0E5A1D302C35778C003CE36C /* MainTabbarController.swift */,
-				0E5A1D342C35781E003CE36C /* FavoriteCharacterViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -231,6 +233,15 @@
 				0E5A1D552C364789003CE36C /* FavoriteMarvelCharacter+CoreDataProperties.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		0E5A1D5A2C36681E003CE36C /* FavoriteCharacterViewController */ = {
+			isa = PBXGroup;
+			children = (
+				0E5A1D342C35781E003CE36C /* FavoriteCharacterViewController.swift */,
+				0E5A1D5B2C366834003CE36C /* FavoriteCharacterViewModel.swift */,
+			);
+			path = FavoriteCharacterViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -384,6 +395,7 @@
 				0E5A1D4D2C35A6AD003CE36C /* SearchCharacterViewModel.swift in Sources */,
 				0E5A1D382C3581B3003CE36C /* MarvelCharacter.swift in Sources */,
 				0E5A1D4F2C35AC6C003CE36C /* Bundle+.swift in Sources */,
+				0E5A1D5C2C366834003CE36C /* FavoriteCharacterViewModel.swift in Sources */,
 				0E5A1D332C35780D003CE36C /* SearchCharacterViewController.swift in Sources */,
 				0E5A1D592C364898003CE36C /* CoreDataManager.swift in Sources */,
 				0E5A1D012C357285003CE36C /* SceneDelegate.swift in Sources */,
