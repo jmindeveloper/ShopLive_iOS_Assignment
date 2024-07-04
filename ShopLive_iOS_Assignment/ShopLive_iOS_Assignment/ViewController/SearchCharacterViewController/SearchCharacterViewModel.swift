@@ -16,6 +16,7 @@ final class SearchCharacterViewModel {
     private let coreDataManager = CoreDataManager()
     private var pagenationCount = 0
     private let apiCallLimitCount = 10
+    private var isDonePagenation: Bool = false
     
     var marvelCharacters: [MarvelCharacter] = [] {
         didSet {
@@ -42,6 +43,9 @@ final class SearchCharacterViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] characters in
                 self?.marvelCharacters.append(contentsOf: characters)
+                if characters.isEmpty {
+                    self?.isDonePagenation = true
+                }
                 print(characters.map { $0.id })
             }.store(in: &subscriptions)
         
@@ -54,6 +58,7 @@ final class SearchCharacterViewModel {
         $searchCharacterName
             .debounce(for: 0.3, scheduler: DispatchQueue.main)
             .sink { [weak self] text in
+                self?.isDonePagenation = false
                 if text.count >= 2 {
                     self?.pagenationCount = 0
                     self?.marvelCharacters.removeAll()
@@ -66,6 +71,7 @@ final class SearchCharacterViewModel {
     
     /// query가 비었
     func getMarvelCharacters(query: String? = nil) {
+        if isDonePagenation { return }
         let ts = String(Date().timeIntervalSince1970)
         guard let hashKey = getAPICallHash(ts),
               let publicKey = Bundle.main.PUBLIC_KEY else {
