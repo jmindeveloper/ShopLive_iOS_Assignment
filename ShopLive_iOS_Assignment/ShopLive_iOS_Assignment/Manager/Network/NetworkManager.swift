@@ -50,6 +50,7 @@ final class NetworkManager: NetworkManagerProtocol {
     }
     
     func getMarvelCharacters(resource: Resource) throws {
+        requestTask?.cancel()
         requestTask = Task {
             let characters = try await getMarvelCharacters(request: resource.urlRequest)
             characterPublisher.send(characters)
@@ -68,5 +69,9 @@ final class NetworkManager: NetworkManagerProtocol {
         }
         
         return data
+    }
+    
+    private func cancelRequest() {
+        requestTask?.cancel()
     }
 }
