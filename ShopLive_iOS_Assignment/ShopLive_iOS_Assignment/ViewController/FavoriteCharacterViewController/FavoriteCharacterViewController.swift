@@ -109,5 +109,7 @@ extension FavoriteCharacterViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension FavoriteCharacterViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.deleteFavoriteMarvelCharacter(index: indexPath.row)
+    }
 }
