@@ -58,4 +58,17 @@ final class CoreDataManager {
             persistentContainer.viewContext.rollback()
         }
     }
+    
+    func deleteFavoriteCharacter(character: FavoriteMarvelCharacter) {
+        persistentContainer.viewContext.delete(character)
+        
+        do {
+            try persistentContainer.viewContext.save()
+            var previousCharacterArray = favoriteCharacterPublisher.value
+            previousCharacterArray.removeAll { $0.id == character.id }
+            favoriteCharacterPublisher.send(previousCharacterArray)
+        } catch {
+            persistentContainer.viewContext.rollback()
+        }
+    }
 }
