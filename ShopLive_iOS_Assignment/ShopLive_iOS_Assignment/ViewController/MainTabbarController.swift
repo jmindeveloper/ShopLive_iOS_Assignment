@@ -26,6 +26,7 @@ final class MainTabbarController: UITabBarController {
         let networkManager = NetworkManager()
         let coreDataManager = CoreDataManager()
         let searchVM = SearchCharacterViewModel(networkManager: networkManager, coreDataManager: coreDataManager)
+        let favoriteVM = FavoriteCharacterViewModel(coreDataManager: coreDataManager)
         
         let searchVC = setNavigationControllerItem(
             vc: SearchCharacterViewController(viewModel: searchVM),
@@ -33,7 +34,7 @@ final class MainTabbarController: UITabBarController {
             image: UIImage(systemName: "magnifyingglass") ?? UIImage()
         )
         let favoriteVC = setNavigationControllerItem(
-            vc: FavoriteCharacterViewController(),
+            vc: FavoriteCharacterViewController(viewModel: favoriteVM),
             title: "Favorite",
             image: UIImage(systemName: "star") ?? UIImage()
         )
