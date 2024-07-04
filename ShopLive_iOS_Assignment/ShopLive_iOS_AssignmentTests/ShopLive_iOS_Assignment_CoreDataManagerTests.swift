@@ -63,4 +63,50 @@ final class ShopLive_iOS_Assignment_CoreDataManagerTests: XCTestCase {
                 XCTAssertEqual(characters.first?.id, 1)
             }.store(in: &subscriptions)
     }
+    
+    
+    func test_saveFavoriteCharacterTest() {
+        // Given
+        let entity1 = characters.first!
+        let entity2 = characters[1]
+        
+        // When
+        coreDataManager.saveFavoriteCharacter(entity: entity1)
+        coreDataManager.saveFavoriteCharacter(entity: entity2)
+        
+        Thread.sleep(forTimeInterval: 1)
+        
+        // Then
+        coreDataManager.favoriteCharacterPublisher
+            .sink { characters in
+                XCTAssertEqual(characters.count, 2)
+                XCTAssertEqual(characters[0].id, 1)
+                XCTAssertEqual(characters[1].id, 2)
+            }.store(in: &subscriptions)
+    }
+    
+    func test_saveFavoriteCharacter_OverFiveTest() {
+        // Given
+        for entity in characters {
+            coreDataManager.saveFavoriteCharacter(entity: entity)
+        }
+        let entity = FavoriteMarvelCharacterEntity(
+            id: 6,
+            name: "헐크",
+            description: "초록색 괴물",
+            date: Date(),
+            thumbnail: Data()
+        )
+        // When
+        coreDataManager.saveFavoriteCharacter(entity: entity)
+        Thread.sleep(forTimeInterval: 1)
+        
+        // Then
+        coreDataManager.favoriteCharacterPublisher
+            .sink { characters in
+                XCTAssertEqual(characters.count, 5)
+                XCTAssertEqual(characters[0].id, 2)
+                XCTAssertEqual(characters[4].id, 6)
+            }.store(in: &subscriptions)
+    }
 }
