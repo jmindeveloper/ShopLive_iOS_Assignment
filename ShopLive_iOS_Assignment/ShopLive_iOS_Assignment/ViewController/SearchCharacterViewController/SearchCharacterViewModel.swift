@@ -86,8 +86,23 @@ final class SearchCharacterViewModel {
             print(error.localizedDescription)
         }
     }
+    
+    // marvelCharacter의 요소가 favorite에 속하는지 확인하는 함수
+    func checkExistInFavoriteCharacter(index: Int) -> Bool {
+        let character = marvelCharacters[index]
         
-    private func saveFavoriteMarveiCharacter(index: Int) {
+        return favoriteMarvelCharacters.contains { $0.id == character.id }
+    }
+    
+    func tapMarvelCharacterCardAction(index: Int) {
+        if checkExistInFavoriteCharacter(index: index) {
+            deleteFavoriteMarvelCharacter(index: index)
+        } else {
+            saveFavoriteMarvelCharacter(index: index)
+        }
+    }
+    
+    private func saveFavoriteMarvelCharacter(index: Int) {
         let character = marvelCharacters[index]
         Task {
             do {
