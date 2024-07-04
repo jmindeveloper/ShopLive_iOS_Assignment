@@ -13,6 +13,7 @@ final class SearchCharacterViewModel {
     
     // MARK: - Properties
     private let networkManager = NetworkManager()
+    private let coreDataManager = CoreDataManager()
     private var pagenationCount = 0
     private let apiCallLimitCount = 10
     
@@ -22,12 +23,18 @@ final class SearchCharacterViewModel {
             collectionViewUpdatePublisher.send()
         }
     }
+    var favoriteMarvelCharacters: [FavoriteMarvelCharacter] = [] {
+        didSet {
+            collectionViewUpdatePublisher.send()
+        }
+    }
     @Published var searchCharacterName: String = ""
     let collectionViewUpdatePublisher = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
     
     init() {
         binding()
+        coreDataManager.getFavoriteCharacter()
     }
     
     private func binding() {
@@ -35,7 +42,13 @@ final class SearchCharacterViewModel {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] characters in
                 self?.marvelCharacters.append(contentsOf: characters)
-                print(characters.map { $0.name })
+                print(characters.map { $0.id })
+            }.store(in: &subscriptions)
+        
+        coreDataManager.favoriteCharacterPublisher
+            .sink { [weak self] characters in
+                print(characters.count)
+                self?.favoriteMarvelCharacters = characters
             }.store(in: &subscriptions)
         
         $searchCharacterName
@@ -78,6 +91,53 @@ final class SearchCharacterViewModel {
             try networkManager.getMarvelCharacters(resource: resource)
         } catch {
             print(error.localizedDescription)
+        }
+    }
+    
+    // marvelCharacter의 요소가 favorite에 속하는지 확인하는 함수
+    func checkExistInFavoriteCharacter(index: Int) -> Bool {
+        let character = marvelCharacters[index]
+        
+        return favoriteMarvelCharacters.contains { $0.id == character.id }
+    }
+    
+    func tapMarvelCharacterCardAction(index: Int) {
+        if checkExistInFavoriteCharacter(index: index) {
+            deleteFavoriteMarvelCharacter(index: index)
+        } else {
+            saveFavoriteMarvelCharacter(index: index)
+        }
+    }
+    
+    private func saveFavoriteMarvelCharacter(index: Int) {
+        let character = marvelCharacters[index]
+        Task {
+            do {
+                let imageURL = URL(string: "\(character.thumbnail.path).\(character.thumbnail.extension)")
+                let imageData = try await networkManager.getImageData(url: imageURL)
+                
+                let characterEntity = FavoriteMarvelCharacterEntity(
+                    id: Int64(character.id),
+                    name: character.name,
+                    description: character.description,
+                    date: Date(),
+                    thumbnail: imageData
+                )
+                
+                DispatchQueue.main.async { [weak self] in
+                    self?.coreDataManager.saveFavoriteCharacter(entity: characterEntity)
+                }
+                
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func deleteFavoriteMarvelCharacter(index: Int) {
+        let character = marvelCharacters[index]
+        if let favoriteCharacter = favoriteMarvelCharacters.first(where: { $0.id == character.id }) {
+            coreDataManager.deleteFavoriteCharacter(character: favoriteCharacter)
         }
     }
     

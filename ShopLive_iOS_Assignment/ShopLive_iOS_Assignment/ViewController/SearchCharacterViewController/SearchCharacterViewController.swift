@@ -123,7 +123,12 @@ extension SearchCharacterViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.configureView(model: viewModel.marvelCharacters[indexPath.row])
+        cell.configureView(
+            model: viewModel.marvelCharacters[indexPath.row],
+            isFavorite: viewModel.checkExistInFavoriteCharacter(
+                index: indexPath.row
+            )
+        )
         
         return cell
     }
@@ -135,6 +140,10 @@ extension SearchCharacterViewController: UICollectionViewDelegate {
         if indexPath.row + 1 == viewModel.marvelCharacters.count {
             viewModel.getMarvelCharacters()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.tapMarvelCharacterCardAction(index: indexPath.row)
     }
 }
 

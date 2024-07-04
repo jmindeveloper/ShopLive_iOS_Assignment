@@ -85,11 +85,13 @@ final class CharacterCardCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func configureView(model: MarvelCharacter) {
+    func configureView(model: MarvelCharacter, isFavorite: Bool) {
         // TODO: - 추후 비동기코드로 변경
         if let imageURL = URL(string: "\(model.thumbnail.path).\(model.thumbnail.extension)") {
             thumbnailImageView.sd_setImage(with: imageURL)
         }
+        
+        contentView.backgroundColor = isFavorite ? .systemGray2 : .white
         titleLabel.text = model.name
         descriptionLabel.text = model.description
     }

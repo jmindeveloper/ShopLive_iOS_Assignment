@@ -29,8 +29,8 @@ final class MainTabbarController: UITabBarController {
             image: UIImage(systemName: "magnifyingglass") ?? UIImage()
         )
         let favoriteVC = setNavigationControllerItem(
-            vc: SearchCharacterViewController(),
-            title: "Search",
+            vc: FavoriteCharacterViewController(),
+            title: "Favorite",
             image: UIImage(systemName: "star") ?? UIImage()
         )
         

@@ -42,7 +42,7 @@ final class CoreDataManager {
         favoriteCharacter.name = entity.name
         favoriteCharacter.characterDescription = entity.description
         favoriteCharacter.thumbnail = entity.thumbnail
-        favoriteCharacter.date = Date()
+        favoriteCharacter.date = entity.date
         
         do {
             try persistentContainer.viewContext.save()
