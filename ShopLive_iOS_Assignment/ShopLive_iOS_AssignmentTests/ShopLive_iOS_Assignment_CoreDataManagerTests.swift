@@ -97,6 +97,7 @@ final class ShopLive_iOS_Assignment_CoreDataManagerTests: XCTestCase {
             date: Date(),
             thumbnail: Data()
         )
+        
         // When
         coreDataManager.saveFavoriteCharacter(entity: entity)
         Thread.sleep(forTimeInterval: 1)
@@ -105,8 +106,32 @@ final class ShopLive_iOS_Assignment_CoreDataManagerTests: XCTestCase {
         coreDataManager.favoriteCharacterPublisher
             .sink { characters in
                 XCTAssertEqual(characters.count, 5)
-                XCTAssertEqual(characters[0].id, 2)
-                XCTAssertEqual(characters[4].id, 6)
+                XCTAssertEqual(characters.first?.id, 2)
+                XCTAssertEqual(characters.last?.id, 6)
+            }.store(in: &subscriptions)
+    }
+    
+    func test_deleteFavoriteCharacterTest() {
+        // Given
+        for entity in characters {
+            coreDataManager.saveFavoriteCharacter(entity: entity)
+        }
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FavoriteMarvelCharacter")
+        let characters = try? (persistentContainer.viewContext.fetch(fetchRequest) as? [FavoriteMarvelCharacter])?.sorted {
+            $0.id < $1.id
+        }
+        
+        // When
+        coreDataManager.deleteFavoriteCharacter(character: characters!.first!)
+        coreDataManager.deleteFavoriteCharacter(character: characters!.last!)
+        Thread.sleep(forTimeInterval: 1)
+        
+        // Then
+        coreDataManager.favoriteCharacterPublisher
+            .sink { characters in
+                XCTAssertEqual(characters.count, 3)
+                XCTAssertEqual(characters.first?.id, 2)
+                XCTAssertEqual(characters.last?.id, 4)
             }.store(in: &subscriptions)
     }
 }
