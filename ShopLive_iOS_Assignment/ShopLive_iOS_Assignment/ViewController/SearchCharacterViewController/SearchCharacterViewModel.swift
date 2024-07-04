@@ -13,12 +13,18 @@ final class SearchCharacterViewModel {
     
     // MARK: - Properties
     private let networkManager = NetworkManager()
+    private let coreDataManager = CoreDataManager()
     private var pagenationCount = 0
     private let apiCallLimitCount = 10
     
     var marvelCharacters: [MarvelCharacter] = [] {
         didSet {
             pagenationCount += 9
+            collectionViewUpdatePublisher.send()
+        }
+    }
+    var favoriteMarvelCharacters: [FavoriteMarvelCharacter] = [] {
+        didSet {
             collectionViewUpdatePublisher.send()
         }
     }
@@ -78,6 +84,35 @@ final class SearchCharacterViewModel {
             try networkManager.getMarvelCharacters(resource: resource)
         } catch {
             print(error.localizedDescription)
+        }
+    }
+        
+    private func saveFavoriteMarveiCharacter(index: Int) {
+        let character = marvelCharacters[index]
+        Task {
+            do {
+                let imageURL = URL(string: "\(character.thumbnail.path).\(character.thumbnail.extension)")
+                let imageData = try await networkManager.getImageData(url: imageURL)
+                
+                let characterEntity = FavoriteMarvelCharacterEntity(
+                    id: Int64(character.id),
+                    name: character.name,
+                    description: character.description,
+                    date: Date(),
+                    thumbnail: imageData
+                )
+                
+                coreDataManager.saveFavoriteCharacter(entity: characterEntity)
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func deleteFavoriteMarvelCharacter(index: Int) {
+        let character = marvelCharacters[index]
+        if let favoriteCharacter = favoriteMarvelCharacters.first(where: { $0.id == character.id }) {
+            coreDataManager.deleteFavoriteCharacter(character: favoriteCharacter)
         }
     }
     
