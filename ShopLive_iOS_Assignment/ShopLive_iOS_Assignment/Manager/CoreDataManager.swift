@@ -7,12 +7,14 @@
 
 import Foundation
 import CoreData
+import Combine
 
 final class CoreDataManager {
     
     // MARK: - Properties
     private let entityName = "FavoriteMarvelCharacter"
     private let persistentContainer: NSPersistentContainer
+    let favoriteCharacterPublisher = CurrentValueSubject<[FavoriteMarvelCharacter], Never>([] )
     
     init() {
         persistentContainer = NSPersistentContainer(name: entityName)
@@ -23,5 +25,14 @@ final class CoreDataManager {
         }
     }
     
-    
+    func getFavoriteCharacter() {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+        
+        do {
+            let favoriteCharacters = try persistentContainer.viewContext.fetch(fetchRequest) as? [FavoriteMarvelCharacter] ?? []
+            favoriteCharacterPublisher.send(favoriteCharacters)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }
