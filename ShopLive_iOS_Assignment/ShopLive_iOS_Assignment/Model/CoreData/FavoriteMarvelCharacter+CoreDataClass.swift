@@ -13,3 +13,11 @@ import CoreData
 public class FavoriteMarvelCharacter: NSManagedObject {
 
 }
+
+struct FavoriteMarvelCharacterEntity {
+    let id: Int64
+    let name: String
+    let description: String
+    let date: Date
+    let thumbnail: Data
+}
