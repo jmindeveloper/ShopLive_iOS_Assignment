@@ -123,7 +123,12 @@ extension SearchCharacterViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.configureView(model: viewModel.marvelCharacters[indexPath.row])
+        cell.configureView(
+            model: viewModel.marvelCharacters[indexPath.row],
+            isFavorite: viewModel.checkExistInFavoriteCharacter(
+                index: indexPath.row
+            )
+        )
         
         return cell
     }
