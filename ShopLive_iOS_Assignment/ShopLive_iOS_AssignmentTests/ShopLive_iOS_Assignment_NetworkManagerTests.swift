@@ -32,7 +32,7 @@ final class ShopLive_iOS_Assignment_NetworkManagerTests: XCTestCase {
     override func tearDown() {
         networkManager = nil
         mockSession = nil
-        subscriptions.removeAll()
+        subscriptions = nil
         super.tearDown()
     }
     

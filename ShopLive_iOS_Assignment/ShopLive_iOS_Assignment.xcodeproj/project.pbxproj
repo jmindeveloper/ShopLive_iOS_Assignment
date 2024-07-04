@@ -36,6 +36,7 @@
 		0EA198212C368717001C07BD /* LoadingAnimationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA198202C368717001C07BD /* LoadingAnimationCollectionViewCell.swift */; };
 		0EA198292C36A837001C07BD /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA198282C36A837001C07BD /* MockURLSession.swift */; };
 		0EA1982B2C36A85A001C07BD /* ShopLive_iOS_Assignment_NetworkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA1982A2C36A85A001C07BD /* ShopLive_iOS_Assignment_NetworkManagerTests.swift */; };
+		0EA1982D2C36B4F2001C07BD /* ShopLive_iOS_Assignment_CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA1982C2C36B4F2001C07BD /* ShopLive_iOS_Assignment_CoreDataManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		0EA198202C368717001C07BD /* LoadingAnimationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimationCollectionViewCell.swift; sourceTree = "<group>"; };
 		0EA198282C36A837001C07BD /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 		0EA1982A2C36A85A001C07BD /* ShopLive_iOS_Assignment_NetworkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopLive_iOS_Assignment_NetworkManagerTests.swift; sourceTree = "<group>"; };
+		0EA1982C2C36B4F2001C07BD /* ShopLive_iOS_Assignment_CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopLive_iOS_Assignment_CoreDataManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 			children = (
 				0E5A1D152C357287003CE36C /* ShopLive_iOS_AssignmentTests.swift */,
 				0EA1982A2C36A85A001C07BD /* ShopLive_iOS_Assignment_NetworkManagerTests.swift */,
+				0EA1982C2C36B4F2001C07BD /* ShopLive_iOS_Assignment_CoreDataManagerTests.swift */,
 			);
 			path = ShopLive_iOS_AssignmentTests;
 			sourceTree = "<group>";
@@ -451,6 +454,7 @@
 			files = (
 				0E5A1D162C357287003CE36C /* ShopLive_iOS_AssignmentTests.swift in Sources */,
 				0EA1982B2C36A85A001C07BD /* ShopLive_iOS_Assignment_NetworkManagerTests.swift in Sources */,
+				0EA1982D2C36B4F2001C07BD /* ShopLive_iOS_Assignment_CoreDataManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
