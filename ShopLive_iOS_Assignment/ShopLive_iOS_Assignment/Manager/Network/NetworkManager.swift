@@ -8,7 +8,16 @@
 import Foundation
 import Combine
 
-final class NetworkManager {
+protocol NetworkManagerProtocol {
+    var characterPublisher: CurrentValueSubject<[MarvelCharacter], Never> { get }
+    
+    init()
+    
+    func getMarvelCharacters(resource: Resource) throws
+    func getImageData(url: URL?) async throws -> Data
+}
+
+final class NetworkManager: NetworkManagerProtocol {
     
     // MARK: - Properties
     private let session: URLSession

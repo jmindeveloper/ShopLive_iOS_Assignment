@@ -9,7 +9,15 @@ import Foundation
 import CoreData
 import Combine
 
-final class CoreDataManager {
+protocol CoreDataManagerProtocol {
+    var favoriteCharacterPublisher: CurrentValueSubject<[FavoriteMarvelCharacter], Never> { get }
+    
+    func getFavoriteCharacter()
+    func saveFavoriteCharacter(entity: FavoriteMarvelCharacterEntity)
+    func deleteFavoriteCharacter(character: FavoriteMarvelCharacter)
+}
+
+final class CoreDataManager: CoreDataManagerProtocol {
     
     // MARK: - Properties
     private let entityName = "FavoriteMarvelCharacter"
