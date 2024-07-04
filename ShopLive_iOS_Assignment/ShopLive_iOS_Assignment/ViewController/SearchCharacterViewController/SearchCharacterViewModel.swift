@@ -15,16 +15,24 @@ protocol SearchCharacterViewModelProtocol {
     var searchCharacterName: String { get set }
     var collectionViewUpdatePublisher: PassthroughSubject<Void, Never> { get }
     
+    init(networkManager: NetworkManagerProtocol, coreDataManager: CoreDataManagerProtocol)
+    
     func getMarvelCharacters(query: String?)
     func checkExistInFavoriteCharacter(index: Int) -> Bool
     func tapMarvelCharacterCardAction(index: Int)
 }
 
+extension SearchCharacterViewModelProtocol {
+    func getMarvelCharacters(query: String? = nil) {
+        getMarvelCharacters(query: query)
+    }
+}
+
 final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
     
     // MARK: - Properties
-    private let networkManager = NetworkManager()
-    private let coreDataManager = CoreDataManager()
+    private let networkManager: NetworkManagerProtocol
+    private let coreDataManager: CoreDataManagerProtocol
     private var pagenationCount = 0
     private let apiCallLimitCount = 10
     private var isDonePagenation: Bool = false
@@ -44,9 +52,10 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
     let collectionViewUpdatePublisher = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
     
-    init() {
+    init(networkManager: NetworkManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
+        self.coreDataManager = coreDataManager
+        self.networkManager = networkManager
         binding()
-        coreDataManager.getFavoriteCharacter()
     }
     
     private func binding() {
