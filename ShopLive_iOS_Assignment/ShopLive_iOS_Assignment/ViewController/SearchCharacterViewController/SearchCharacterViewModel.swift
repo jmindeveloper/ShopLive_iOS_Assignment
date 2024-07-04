@@ -9,7 +9,18 @@ import Foundation
 import Combine
 import CryptoKit
 
-final class SearchCharacterViewModel {
+protocol SearchCharacterViewModelProtocol {
+    var marvelCharacters: [MarvelCharacter] { get set }
+    var favoriteMarvelCharacters: [FavoriteMarvelCharacter] { get set }
+    var searchCharacterName: String { get set }
+    var collectionViewUpdatePublisher: PassthroughSubject<Void, Never> { get }
+    
+    func getMarvelCharacters(query: String?)
+    func checkExistInFavoriteCharacter(index: Int) -> Bool
+    func tapMarvelCharacterCardAction(index: Int)
+}
+
+final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
     
     // MARK: - Properties
     private let networkManager = NetworkManager()
