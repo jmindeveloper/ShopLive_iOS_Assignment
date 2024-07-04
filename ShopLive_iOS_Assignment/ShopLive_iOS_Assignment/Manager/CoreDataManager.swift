@@ -50,7 +50,7 @@ final class CoreDataManager {
             
             previousCharacterArray.append(favoriteCharacter)
             if previousCharacterArray.count > 5 {
-                // TODO: - 가장 오래된 카드 삭제
+                favoriteCharacterPublisher.send(try removeOldestCharacter(characters: previousCharacterArray))
             } else {
                 favoriteCharacterPublisher.send(previousCharacterArray)
             }
@@ -70,5 +70,20 @@ final class CoreDataManager {
         } catch {
             persistentContainer.viewContext.rollback()
         }
+    }
+    
+    private func removeOldestCharacter(characters: [FavoriteMarvelCharacter]) throws -> [FavoriteMarvelCharacter] {
+        var characters = characters
+        let oldestCharacter = characters.min {
+            $0.date ?? Date() < $1.date ?? Date()
+        }
+        
+        if let oldestCharacter = oldestCharacter {
+            characters.removeAll { $0.id == oldestCharacter.id }
+            persistentContainer.viewContext.delete(oldestCharacter)
+            try persistentContainer.viewContext.save()
+        }
+        
+        return characters
     }
 }
