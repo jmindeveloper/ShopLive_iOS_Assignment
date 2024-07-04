@@ -12,6 +12,8 @@ import Combine
 protocol CoreDataManagerProtocol {
     var favoriteCharacterPublisher: CurrentValueSubject<[FavoriteMarvelCharacter], Never> { get }
     
+    init(persistentContainer: NSPersistentContainer?)
+    
     func getFavoriteCharacter()
     func saveFavoriteCharacter(entity: FavoriteMarvelCharacterEntity)
     func deleteFavoriteCharacter(character: FavoriteMarvelCharacter)
@@ -24,11 +26,15 @@ final class CoreDataManager: CoreDataManagerProtocol {
     private let persistentContainer: NSPersistentContainer
     let favoriteCharacterPublisher = CurrentValueSubject<[FavoriteMarvelCharacter], Never>([] )
     
-    init() {
-        persistentContainer = NSPersistentContainer(name: entityName)
-        persistentContainer.loadPersistentStores { _, error in
-            if let error = error {
-                fatalError(error.localizedDescription)
+    init(persistentContainer: NSPersistentContainer? = nil) {
+        if let container = persistentContainer {
+            self.persistentContainer = container
+        } else {
+            self.persistentContainer = NSPersistentContainer(name: entityName)
+            self.persistentContainer.loadPersistentStores { _, error in
+                if let error = error {
+                    fatalError(error.localizedDescription)
+                }
             }
         }
     }
