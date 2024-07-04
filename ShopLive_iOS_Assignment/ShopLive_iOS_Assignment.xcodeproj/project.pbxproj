@@ -33,6 +33,7 @@
 		0E5A1D5C2C366834003CE36C /* FavoriteCharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D5B2C366834003CE36C /* FavoriteCharacterViewModel.swift */; };
 		0EA1981A2C3681D7001C07BD /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0EA198192C3681D7001C07BD /* Lottie */; };
 		0EA1981E2C3681FF001C07BD /* loading_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 0EA1981D2C3681FE001C07BD /* loading_animation_lottie.json */; };
+		0EA198212C368717001C07BD /* LoadingAnimationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA198202C368717001C07BD /* LoadingAnimationCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +82,7 @@
 		0E5A1D582C364898003CE36C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		0E5A1D5B2C366834003CE36C /* FavoriteCharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCharacterViewModel.swift; sourceTree = "<group>"; };
 		0EA1981D2C3681FE001C07BD /* loading_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading_animation_lottie.json; sourceTree = "<group>"; };
+		0EA198202C368717001C07BD /* LoadingAnimationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimationCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 		0E5A1D2F2C357781003CE36C /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				0EA1981F2C368707001C07BD /* CommonView */,
 				0E5A1D5A2C36681E003CE36C /* FavoriteCharacterViewController */,
 				0E5A1D3F2C358B62003CE36C /* SearchCharacterViewController */,
 				0E5A1D302C35778C003CE36C /* MainTabbarController.swift */,
@@ -263,6 +266,14 @@
 				0EA1981D2C3681FE001C07BD /* loading_animation_lottie.json */,
 			);
 			path = Animation;
+			sourceTree = "<group>";
+		};
+		0EA1981F2C368707001C07BD /* CommonView */ = {
+			isa = PBXGroup;
+			children = (
+				0EA198202C368717001C07BD /* LoadingAnimationCollectionViewCell.swift */,
+			);
+			path = CommonView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -416,6 +427,7 @@
 				0E5A1D562C364789003CE36C /* FavoriteMarvelCharacter+CoreDataClass.swift in Sources */,
 				0E5A1D312C35778C003CE36C /* MainTabbarController.swift in Sources */,
 				0E5A1D452C359034003CE36C /* View+.swift in Sources */,
+				0EA198212C368717001C07BD /* LoadingAnimationCollectionViewCell.swift in Sources */,
 				0E5A1D4D2C35A6AD003CE36C /* SearchCharacterViewModel.swift in Sources */,
 				0E5A1D382C3581B3003CE36C /* MarvelCharacter.swift in Sources */,
 				0E5A1D4F2C35AC6C003CE36C /* Bundle+.swift in Sources */,
