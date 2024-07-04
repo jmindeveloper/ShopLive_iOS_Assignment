@@ -80,7 +80,7 @@ final class CharacterCardCollectionViewCell: UICollectionViewCell {
         }
         
         descriptionLabel.snp.makeConstraints {
-            $0.horizontalEdges.equalToSuperview().inset(8).priority(750)
+            $0.horizontalEdges.equalToSuperview().inset(8)
             $0.top.equalTo(titleLabel.snp.bottom).offset(4)
         }
     }
