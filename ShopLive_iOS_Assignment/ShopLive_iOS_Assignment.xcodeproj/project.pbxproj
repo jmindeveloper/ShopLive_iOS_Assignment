@@ -26,6 +26,10 @@
 		0E5A1D4B2C359944003CE36C /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D4A2C359944003CE36C /* Resource.swift */; };
 		0E5A1D4D2C35A6AD003CE36C /* SearchCharacterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D4C2C35A6AD003CE36C /* SearchCharacterViewModel.swift */; };
 		0E5A1D4F2C35AC6C003CE36C /* Bundle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D4E2C35AC6C003CE36C /* Bundle+.swift */; };
+		0E5A1D532C3646D0003CE36C /* FavoriteMarvelCharacter.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D512C3646D0003CE36C /* FavoriteMarvelCharacter.xcdatamodeld */; };
+		0E5A1D562C364789003CE36C /* FavoriteMarvelCharacter+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D542C364789003CE36C /* FavoriteMarvelCharacter+CoreDataClass.swift */; };
+		0E5A1D572C364789003CE36C /* FavoriteMarvelCharacter+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D552C364789003CE36C /* FavoriteMarvelCharacter+CoreDataProperties.swift */; };
+		0E5A1D592C364898003CE36C /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E5A1D582C364898003CE36C /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +72,10 @@
 		0E5A1D4A2C359944003CE36C /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		0E5A1D4C2C35A6AD003CE36C /* SearchCharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCharacterViewModel.swift; sourceTree = "<group>"; };
 		0E5A1D4E2C35AC6C003CE36C /* Bundle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+.swift"; sourceTree = "<group>"; };
+		0E5A1D522C3646D0003CE36C /* FavoriteMarvelCharacter.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FavoriteMarvelCharacter.xcdatamodel; sourceTree = "<group>"; };
+		0E5A1D542C364789003CE36C /* FavoriteMarvelCharacter+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteMarvelCharacter+CoreDataClass.swift"; sourceTree = "<group>"; };
+		0E5A1D552C364789003CE36C /* FavoriteMarvelCharacter+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteMarvelCharacter+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		0E5A1D582C364898003CE36C /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +172,7 @@
 		0E5A1D362C3581AC003CE36C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				0E5A1D502C3646B1003CE36C /* CoreData */,
 				0E5A1D372C3581B3003CE36C /* MarvelCharacter.swift */,
 			);
 			path = Model;
@@ -200,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				0E5A1D492C359938003CE36C /* Network */,
+				0E5A1D582C364898003CE36C /* CoreDataManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -211,6 +221,16 @@
 				0E5A1D4A2C359944003CE36C /* Resource.swift */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		0E5A1D502C3646B1003CE36C /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				0E5A1D512C3646D0003CE36C /* FavoriteMarvelCharacter.xcdatamodeld */,
+				0E5A1D542C364789003CE36C /* FavoriteMarvelCharacter+CoreDataClass.swift */,
+				0E5A1D552C364789003CE36C /* FavoriteMarvelCharacter+CoreDataProperties.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,15 +373,19 @@
 			files = (
 				0E5A1D482C3598BB003CE36C /* NetworkManager.swift in Sources */,
 				0E5A1D352C35781E003CE36C /* FavoriteCharacterViewController.swift in Sources */,
+				0E5A1D532C3646D0003CE36C /* FavoriteMarvelCharacter.xcdatamodeld in Sources */,
 				0E5A1D422C358B8D003CE36C /* CharacterCardCollectionViewCell.swift in Sources */,
 				0E5A1D4B2C359944003CE36C /* Resource.swift in Sources */,
 				0E5A1CFF2C357285003CE36C /* AppDelegate.swift in Sources */,
+				0E5A1D572C364789003CE36C /* FavoriteMarvelCharacter+CoreDataProperties.swift in Sources */,
+				0E5A1D562C364789003CE36C /* FavoriteMarvelCharacter+CoreDataClass.swift in Sources */,
 				0E5A1D312C35778C003CE36C /* MainTabbarController.swift in Sources */,
 				0E5A1D452C359034003CE36C /* View+.swift in Sources */,
 				0E5A1D4D2C35A6AD003CE36C /* SearchCharacterViewModel.swift in Sources */,
 				0E5A1D382C3581B3003CE36C /* MarvelCharacter.swift in Sources */,
 				0E5A1D4F2C35AC6C003CE36C /* Bundle+.swift in Sources */,
 				0E5A1D332C35780D003CE36C /* SearchCharacterViewController.swift in Sources */,
+				0E5A1D592C364898003CE36C /* CoreDataManager.swift in Sources */,
 				0E5A1D012C357285003CE36C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -735,6 +759,19 @@
 			productName = SDWebImage;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		0E5A1D512C3646D0003CE36C /* FavoriteMarvelCharacter.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0E5A1D522C3646D0003CE36C /* FavoriteMarvelCharacter.xcdatamodel */,
+			);
+			currentVersion = 0E5A1D522C3646D0003CE36C /* FavoriteMarvelCharacter.xcdatamodel */;
+			path = FavoriteMarvelCharacter.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0E5A1CF32C357285003CE36C /* Project object */;
 }
