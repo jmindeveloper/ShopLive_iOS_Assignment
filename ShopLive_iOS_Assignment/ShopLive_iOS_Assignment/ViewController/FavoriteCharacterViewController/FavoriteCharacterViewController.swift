@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 final class FavoriteCharacterViewController: UIViewController {
     
     // MARK: - ViewProperties
-    private lazy var searchCollectionView: UICollectionView = {
+    private lazy var favoriteCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: favoriteCollectionViewLayout())
         collectionView.register(
             CharacterCardCollectionViewCell.self,
@@ -25,6 +26,7 @@ final class FavoriteCharacterViewController: UIViewController {
     
     // MARK: - Properties
     private var viewModel: FavoriteCharacterViewModel
+    private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
     init(viewModel: FavoriteCharacterViewModel) {
@@ -45,12 +47,15 @@ final class FavoriteCharacterViewController: UIViewController {
     }
     
     private func binding() {
-        
+        viewModel.collectionViewUpdatePublisher
+            .sink { [weak self] in
+                self?.favoriteCollectionView.reloadData()
+            }.store(in: &subscriptions)
     }
     
     // MARK: - setSubViews
     private func setSubViews() {
-        [searchCollectionView].forEach {
+        [favoriteCollectionView].forEach {
             view.addSubview($0)
         }
         
@@ -58,7 +63,7 @@ final class FavoriteCharacterViewController: UIViewController {
     }
     
     private func setConstraints() {
-        searchCollectionView.snp.makeConstraints {
+        favoriteCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
@@ -85,7 +90,7 @@ final class FavoriteCharacterViewController: UIViewController {
 // MARK: - UICollectionViewDataSource
 extension FavoriteCharacterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return characterMockData.count
+        return viewModel.favoriteMarvelCharacters.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -96,10 +101,7 @@ extension FavoriteCharacterViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.configureView(
-            model: characterMockData[indexPath.row],
-            isFavorite: false
-        )
+        cell.configureView(coreDataModel: viewModel.favoriteMarvelCharacters[indexPath.row])
         
         return cell
     }
