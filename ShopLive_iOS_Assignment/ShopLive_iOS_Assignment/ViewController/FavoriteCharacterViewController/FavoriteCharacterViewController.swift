@@ -24,6 +24,14 @@ final class FavoriteCharacterViewController: UIViewController {
         return collectionView
     }()
     
+    private let emptyCharacterLabel: UILabel = {
+        let label = UILabel()
+        label.text = "좋아하는 캐릭터가 없습니다."
+        label.textColor = .systemGray4
+        
+        return label
+    }()
+    
     // MARK: - Properties
     private var viewModel: FavoriteCharacterViewModel
     private var subscriptions = Set<AnyCancellable>()
@@ -51,11 +59,22 @@ final class FavoriteCharacterViewController: UIViewController {
             .sink { [weak self] in
                 self?.favoriteCollectionView.reloadData()
             }.store(in: &subscriptions)
+        
+        viewModel.emptyFavoriteMarvelCharacterPublisher
+            .sink { [weak self] isEmpty in
+                if isEmpty {
+                    self?.emptyCharacterLabel.isHidden = false
+                    self?.favoriteCollectionView.isHidden = true
+                } else {
+                    self?.emptyCharacterLabel.isHidden = true
+                    self?.favoriteCollectionView.isHidden = false
+                }
+            }.store(in: &subscriptions)
     }
     
     // MARK: - setSubViews
     private func setSubViews() {
-        [favoriteCollectionView].forEach {
+        [emptyCharacterLabel, favoriteCollectionView].forEach {
             view.addSubview($0)
         }
         
@@ -65,6 +84,10 @@ final class FavoriteCharacterViewController: UIViewController {
     private func setConstraints() {
         favoriteCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+        }
+        
+        emptyCharacterLabel.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
     

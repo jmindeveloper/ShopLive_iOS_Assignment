@@ -27,6 +27,7 @@ final class FavoriteCharacterViewModel: FavoriteCharacterViewModelProtocol {
         }
     }
     let collectionViewUpdatePublisher = PassthroughSubject<Void, Never>()
+    let emptyFavoriteMarvelCharacterPublisher = CurrentValueSubject<Bool, Never>(true)
     private var subscriptions = Set<AnyCancellable>()
     
     init(coreDataManager: CoreDataManagerProtocol) {
@@ -37,7 +38,12 @@ final class FavoriteCharacterViewModel: FavoriteCharacterViewModelProtocol {
     private func binding() {
         coreDataManager.favoriteCharacterPublisher
             .sink { [weak self] character in
-                self?.favoriteMarvelCharacters = character
+                guard let self = self else { return }
+                if character.isEmpty != emptyFavoriteMarvelCharacterPublisher.value {
+                    emptyFavoriteMarvelCharacterPublisher.send(character.isEmpty)
+                }
+                
+                favoriteMarvelCharacters = character
             }.store(in: &subscriptions)
     }
     
