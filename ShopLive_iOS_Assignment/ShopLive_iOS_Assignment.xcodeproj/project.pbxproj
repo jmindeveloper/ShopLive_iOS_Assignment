@@ -34,6 +34,8 @@
 		0EA1981A2C3681D7001C07BD /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0EA198192C3681D7001C07BD /* Lottie */; };
 		0EA1981E2C3681FF001C07BD /* loading_animation_lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = 0EA1981D2C3681FE001C07BD /* loading_animation_lottie.json */; };
 		0EA198212C368717001C07BD /* LoadingAnimationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA198202C368717001C07BD /* LoadingAnimationCollectionViewCell.swift */; };
+		0EA198292C36A837001C07BD /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA198282C36A837001C07BD /* MockURLSession.swift */; };
+		0EA1982B2C36A85A001C07BD /* ShopLive_iOS_Assignment_NetworkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA1982A2C36A85A001C07BD /* ShopLive_iOS_Assignment_NetworkManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +85,8 @@
 		0E5A1D5B2C366834003CE36C /* FavoriteCharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCharacterViewModel.swift; sourceTree = "<group>"; };
 		0EA1981D2C3681FE001C07BD /* loading_animation_lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading_animation_lottie.json; sourceTree = "<group>"; };
 		0EA198202C368717001C07BD /* LoadingAnimationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAnimationCollectionViewCell.swift; sourceTree = "<group>"; };
+		0EA198282C36A837001C07BD /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
+		0EA1982A2C36A85A001C07BD /* ShopLive_iOS_Assignment_NetworkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopLive_iOS_Assignment_NetworkManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				0E5A1D152C357287003CE36C /* ShopLive_iOS_AssignmentTests.swift */,
+				0EA1982A2C36A85A001C07BD /* ShopLive_iOS_Assignment_NetworkManagerTests.swift */,
 			);
 			path = ShopLive_iOS_AssignmentTests;
 			sourceTree = "<group>";
@@ -225,6 +230,7 @@
 			children = (
 				0E5A1D472C3598BB003CE36C /* NetworkManager.swift */,
 				0E5A1D4A2C359944003CE36C /* Resource.swift */,
+				0EA198282C36A837001C07BD /* MockURLSession.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -433,6 +439,7 @@
 				0E5A1D4F2C35AC6C003CE36C /* Bundle+.swift in Sources */,
 				0E5A1D5C2C366834003CE36C /* FavoriteCharacterViewModel.swift in Sources */,
 				0E5A1D332C35780D003CE36C /* SearchCharacterViewController.swift in Sources */,
+				0EA198292C36A837001C07BD /* MockURLSession.swift in Sources */,
 				0E5A1D592C364898003CE36C /* CoreDataManager.swift in Sources */,
 				0E5A1D012C357285003CE36C /* SceneDelegate.swift in Sources */,
 			);
@@ -443,6 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0E5A1D162C357287003CE36C /* ShopLive_iOS_AssignmentTests.swift in Sources */,
+				0EA1982B2C36A85A001C07BD /* ShopLive_iOS_Assignment_NetworkManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

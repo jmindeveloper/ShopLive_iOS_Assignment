@@ -11,7 +11,7 @@ import Combine
 protocol NetworkManagerProtocol {
     var characterPublisher: CurrentValueSubject<[MarvelCharacter], Never> { get }
     
-    init()
+    init(session: URLSessionProtocol)
     
     func getMarvelCharacters(resource: Resource) throws
     func getImageData(url: URL?) async throws -> Data
@@ -20,12 +20,12 @@ protocol NetworkManagerProtocol {
 final class NetworkManager: NetworkManagerProtocol {
     
     // MARK: - Properties
-    private let session: URLSession
+    private let session: URLSessionProtocol
     private var requestTask: Task<(), Error>?
     let characterPublisher = CurrentValueSubject<[MarvelCharacter], Never>([])
     
-    init() {
-        self.session = URLSession(configuration: .default)
+    init(session: URLSessionProtocol = URLSession(configuration: .default)) {
+        self.session = session
     }
     
     // MARK: - Method
