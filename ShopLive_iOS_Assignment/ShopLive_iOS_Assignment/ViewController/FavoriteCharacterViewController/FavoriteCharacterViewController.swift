@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Combine
 
 final class FavoriteCharacterViewController: UIViewController {
     
@@ -33,11 +32,11 @@ final class FavoriteCharacterViewController: UIViewController {
     }()
     
     // MARK: - Properties
-    private var viewModel: FavoriteCharacterViewModel
-    private var subscriptions = Set<AnyCancellable>()
+    private var viewModel: FavoriteCharacterViewModelProtocol
+    private var subscriptions = Set<SLAnyCancellable>()
     
     // MARK: - LifeCycle
-    init(viewModel: FavoriteCharacterViewModel) {
+    init(viewModel: FavoriteCharacterViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }

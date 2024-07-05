@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import Combine
 import Lottie
 
 final class SearchCharacterViewController: UIViewController {
@@ -59,7 +58,7 @@ final class SearchCharacterViewController: UIViewController {
     
     // MARK: - Properties
     private var viewModel: SearchCharacterViewModelProtocol
-    private var subscriptions = Set<AnyCancellable>()
+    private var subscriptions = Set<SLAnyCancellable>()
     
     // MARK: - LifeCycle
     init(viewModel: SearchCharacterViewModelProtocol) {
@@ -133,7 +132,7 @@ final class SearchCharacterViewController: UIViewController {
     }
     
     @objc private func searchBarEditingChanged(_ sender: UITextField) {
-        viewModel.searchCharacterName = sender.text ?? ""
+        viewModel.searchCharacterNamePublisher.value = sender.text ?? ""
     }
     
     // MARK: - CompositionalLayout

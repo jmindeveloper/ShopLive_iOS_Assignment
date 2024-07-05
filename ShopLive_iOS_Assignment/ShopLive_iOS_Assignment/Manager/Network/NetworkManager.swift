@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import Combine
 
 protocol NetworkManagerProtocol {
-    var characterPublisher: CurrentValueSubject<[MarvelCharacter], Never> { get }
+    var characterPublisher: SLCurrentValueSubject<[MarvelCharacter]> { get }
     
     init(session: URLSessionProtocol)
     
@@ -22,7 +21,7 @@ final class NetworkManager: NetworkManagerProtocol {
     // MARK: - Properties
     private let session: URLSessionProtocol
     private var requestTask: Task<(), Error>?
-    let characterPublisher = CurrentValueSubject<[MarvelCharacter], Never>([])
+    let characterPublisher = SLCurrentValueSubject<[MarvelCharacter]>([])
     
     init(session: URLSessionProtocol = URLSession(configuration: .default)) {
         self.session = session

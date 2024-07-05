@@ -7,18 +7,17 @@
 
 import XCTest
 import CoreData
-import Combine
 @testable import ShopLive_iOS_Assignment
 
 final class ShopLive_iOS_Assignment_CoreDataManagerTests: XCTestCase {
     var coreDataManager: CoreDataManager!
     var persistentContainer: NSPersistentContainer!
-    private var subscriptions: Set<AnyCancellable>!
+    private var subscriptions: Set<SLAnyCancellable>!
     var characters: [FavoriteMarvelCharacterEntity]!
     
     override func setUp() {
         super.setUp()
-        subscriptions = Set<AnyCancellable>()
+        subscriptions = Set<SLAnyCancellable>()
         persistentContainer = NSPersistentContainer(name: "FavoriteMarvelCharacter")
         let description = NSPersistentStoreDescription()
         description.type = NSInMemoryStoreType

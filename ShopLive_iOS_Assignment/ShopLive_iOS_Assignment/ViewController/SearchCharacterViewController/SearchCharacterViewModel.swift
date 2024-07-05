@@ -12,9 +12,9 @@ import CryptoKit
 protocol SearchCharacterViewModelProtocol {
     var marvelCharacters: [MarvelCharacter] { get set }
     var favoriteMarvelCharacters: [FavoriteMarvelCharacter] { get set }
-    var searchCharacterName: String { get set }
-    var collectionViewUpdatePublisher: PassthroughSubject<Int?, Never> { get }
-    var isSavingFavoriteCharacterPublisher: PassthroughSubject<Bool, Never> { get }
+    var searchCharacterNamePublisher: SLCurrentValueSubject<String> { get }
+    var collectionViewUpdatePublisher: SLPassthroughSubject<Int?> { get }
+    var isSavingFavoriteCharacterPublisher: SLPassthroughSubject<Bool> { get }
     var isFetchingCharacters: Bool { get set }
     
     init(networkManager: NetworkManagerProtocol, coreDataManager: CoreDataManagerProtocol)
@@ -54,10 +54,12 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
             collectionViewUpdatePublisher.send(nil)
         }
     }
-    @Published var searchCharacterName: String = ""
-    let collectionViewUpdatePublisher = PassthroughSubject<Int?, Never>()
-    let isSavingFavoriteCharacterPublisher = PassthroughSubject<Bool, Never>()
-    private var subscriptions = Set<AnyCancellable>()
+
+    let collectionViewUpdatePublisher = SLPassthroughSubject<Int?>()
+    let isSavingFavoriteCharacterPublisher = SLPassthroughSubject<Bool>()
+    var searchCharacterNamePublisher = SLCurrentValueSubject<String>("")
+    private var subscriptions = Set<SLAnyCancellable>()
+    private var subscription = Set<AnyCancellable>()
     
     init(networkManager: NetworkManagerProtocol, coreDataManager: CoreDataManagerProtocol) {
         self.coreDataManager = coreDataManager
@@ -80,8 +82,8 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
                 self?.favoriteMarvelCharacters = characters
             }.store(in: &subscriptions)
         
-        $searchCharacterName
-            .debounce(for: 0.3, scheduler: DispatchQueue.main)
+        searchCharacterNamePublisher
+            .debounce(for: 0.3, queue: .main)
             .sink { [weak self] text in
                 self?.isDonePagenation = false
                 if text.count >= 2 {
@@ -105,7 +107,7 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
             return
         }
         
-        let query = query == nil ? searchCharacterName : query!
+        let query = query == nil ? searchCharacterNamePublisher.value : query!
         
         let resource = Resource(
             base: "https://gateway.marvel.com:443",

@@ -6,16 +6,15 @@
 //
 
 import Foundation
-
 import XCTest
-import Combine
+//import Combine
 @testable import ShopLive_iOS_Assignment
 
 final class ShopLive_iOS_Assignment_NetworkManagerTests: XCTestCase {
     var networkManager: NetworkManager!
     var mockSession: MockURLSession!
     var resource: Resource!
-    var subscriptions: Set<AnyCancellable>!
+    var subscriptions: Set<SLAnyCancellable>!
     
     override func setUp() {
         super.setUp()
@@ -26,7 +25,7 @@ final class ShopLive_iOS_Assignment_NetworkManagerTests: XCTestCase {
             path: "",
             params: [:]
         )
-        subscriptions = Set<AnyCancellable>()
+        subscriptions = Set<SLAnyCancellable>()
     }
     
     override func tearDown() {
@@ -76,6 +75,7 @@ final class ShopLive_iOS_Assignment_NetworkManagerTests: XCTestCase {
         // Then
         networkManager.characterPublisher
             .sink { characters in
+                print("asdfkljasdfj", characters)
                 XCTAssertEqual(characters.count, 1)
                 XCTAssertEqual(characters.first?.name, "아이언맨")
             }.store(in: &subscriptions)
