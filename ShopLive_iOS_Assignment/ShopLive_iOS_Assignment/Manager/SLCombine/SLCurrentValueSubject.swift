@@ -33,6 +33,7 @@ class SLCurrentValueSubject<Output> {
     }
     
     func send(_ value: Output) {
+        currentValue = value
         for subscriber in subscribers {
             subscriber(value)
         }
