@@ -7,10 +7,9 @@
 
 import Foundation
 import CoreData
-import Combine
 
 protocol CoreDataManagerProtocol {
-    var favoriteCharacterPublisher: CurrentValueSubject<[FavoriteMarvelCharacter], Never> { get }
+    var favoriteCharacterPublisher: SLCurrentValueSubject<[FavoriteMarvelCharacter]> { get }
     
     init(persistentContainer: NSPersistentContainer?)
     
@@ -24,7 +23,7 @@ final class CoreDataManager: CoreDataManagerProtocol {
     // MARK: - Properties
     private let entityName = "FavoriteMarvelCharacter"
     private let persistentContainer: NSPersistentContainer
-    let favoriteCharacterPublisher = CurrentValueSubject<[FavoriteMarvelCharacter], Never>([] )
+    let favoriteCharacterPublisher = SLCurrentValueSubject<[FavoriteMarvelCharacter]>([] )
     
     init(persistentContainer: NSPersistentContainer? = nil) {
         if let container = persistentContainer {

@@ -6,11 +6,11 @@
 //
 
 import Foundation
-import Combine
 
 protocol FavoriteCharacterViewModelProtocol {
     var favoriteMarvelCharacters: [FavoriteMarvelCharacter] { get set }
-    var collectionViewUpdatePublisher: PassthroughSubject<Void, Never> { get }
+    var collectionViewUpdatePublisher: SLPassthroughSubject<Void> { get }
+    var emptyFavoriteMarvelCharacterPublisher: SLCurrentValueSubject<Bool> { get }
     
     init(coreDataManager: CoreDataManagerProtocol)
     
@@ -23,12 +23,12 @@ final class FavoriteCharacterViewModel: FavoriteCharacterViewModelProtocol {
     private let coreDataManager: CoreDataManagerProtocol
     var favoriteMarvelCharacters: [FavoriteMarvelCharacter] = [] {
         didSet {
-            collectionViewUpdatePublisher.send()
+            collectionViewUpdatePublisher.send(Void())
         }
     }
-    let collectionViewUpdatePublisher = PassthroughSubject<Void, Never>()
-    let emptyFavoriteMarvelCharacterPublisher = CurrentValueSubject<Bool, Never>(true)
-    private var subscriptions = Set<AnyCancellable>()
+    let collectionViewUpdatePublisher = SLPassthroughSubject<Void>()
+    let emptyFavoriteMarvelCharacterPublisher = SLCurrentValueSubject<Bool>(true)
+    private var subscriptions = Set<SLAnyCancellable>()
     
     init(coreDataManager: CoreDataManagerProtocol) {
         self.coreDataManager = coreDataManager
