@@ -10,6 +10,7 @@ import CoreData
 
 protocol CoreDataManagerProtocol {
     var favoriteCharacterPublisher: SLCurrentValueSubject<[FavoriteMarvelCharacter]> { get }
+    var errorPublisher: SLPassthroughSubject<Error> { get }
     
     init(persistentContainer: NSPersistentContainer?)
     
@@ -23,7 +24,8 @@ final class CoreDataManager: CoreDataManagerProtocol {
     // MARK: - Properties
     private let entityName = "FavoriteMarvelCharacter"
     private let persistentContainer: NSPersistentContainer
-    let favoriteCharacterPublisher = SLCurrentValueSubject<[FavoriteMarvelCharacter]>([] )
+    let favoriteCharacterPublisher = SLCurrentValueSubject<[FavoriteMarvelCharacter]>([])
+    let errorPublisher = SLPassthroughSubject<Error>()
     
     init(persistentContainer: NSPersistentContainer? = nil) {
         if let container = persistentContainer {
@@ -45,6 +47,7 @@ final class CoreDataManager: CoreDataManagerProtocol {
             let favoriteCharacters = try persistentContainer.viewContext.fetch(fetchRequest) as? [FavoriteMarvelCharacter] ?? []
             favoriteCharacterPublisher.send(favoriteCharacters)
         } catch {
+            errorPublisher.send(error)
             print(error.localizedDescription)
         }
     }
@@ -68,6 +71,7 @@ final class CoreDataManager: CoreDataManagerProtocol {
                 favoriteCharacterPublisher.send(previousCharacterArray)
             }
         } catch {
+            errorPublisher.send(error)
             persistentContainer.viewContext.rollback()
         }
     }
@@ -81,6 +85,7 @@ final class CoreDataManager: CoreDataManagerProtocol {
             previousCharacterArray.removeAll { $0.id == character.id }
             favoriteCharacterPublisher.send(previousCharacterArray)
         } catch {
+            errorPublisher.send(error)
             persistentContainer.viewContext.rollback()
         }
     }
