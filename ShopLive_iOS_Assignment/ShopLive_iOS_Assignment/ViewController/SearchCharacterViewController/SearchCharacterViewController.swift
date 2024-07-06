@@ -98,6 +98,13 @@ final class SearchCharacterViewController: UIViewController {
                     self?.loadingAnimationView.stop()
                 }
             }.store(in: &subscriptions)
+        
+        viewModel.errorPublisher
+            .sink { error in
+                AlertManager(title: "Error", message: error.localizedDescription)
+                    .addAction(actionTitle: "확인", style: .default)
+                    .present()
+            }.store(in: &subscriptions)
     }
     
     // MARK: - setSubViews

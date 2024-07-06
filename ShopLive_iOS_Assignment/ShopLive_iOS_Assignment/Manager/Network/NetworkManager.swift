@@ -29,6 +29,10 @@ final class NetworkManager: NetworkManagerProtocol {
     
     // MARK: - Method
     private func getMarvelCharacters(request: URLRequest?) async throws -> [MarvelCharacter] {
+        if !NetworkCheck.shared.isConnectedPublisher.value {
+            throw URLError(.notConnectedToInternet)
+        }
+        
         guard let request = request else {
             throw URLError(.badURL)
         }
@@ -57,6 +61,10 @@ final class NetworkManager: NetworkManagerProtocol {
     }
     
     func getImageData(url: URL?) async throws -> Data {
+        if !NetworkCheck.shared.isConnectedPublisher.value {
+            throw URLError(.notConnectedToInternet)
+        }
+        
         guard let url = url else {
             throw URLError(.badURL)
         }

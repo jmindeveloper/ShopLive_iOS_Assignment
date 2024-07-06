@@ -16,6 +16,7 @@ protocol SearchCharacterViewModelProtocol {
     var searchCharacterNamePublisher: SLCurrentValueSubject<String> { get }
     var collectionViewUpdatePublisher: SLPassthroughSubject<Int?> { get }
     var isSavingFavoriteCharacterPublisher: SLPassthroughSubject<Bool> { get }
+    var errorPublisher: SLPassthroughSubject<Error> { get }
     var isFetchingCharacters: Bool { get set }
     
     init(networkManager: NetworkManagerProtocol, coreDataManager: CoreDataManagerProtocol)
@@ -59,6 +60,7 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
     let collectionViewUpdatePublisher = SLPassthroughSubject<Int?>()
     let isSavingFavoriteCharacterPublisher = SLPassthroughSubject<Bool>()
     var searchCharacterNamePublisher = SLCurrentValueSubject<String>("")
+    let errorPublisher = SLPassthroughSubject<Error>()
     private var subscriptions = Set<SLAnyCancellable>()
     private var subscription = Set<AnyCancellable>()
     
@@ -83,6 +85,11 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
                 self?.favoriteMarvelCharacters = characters
             }.store(in: &subscriptions)
         
+        coreDataManager.errorPublisher
+            .sink { [weak self] error in
+                self?.errorPublisher.send(error)
+            }.store(in: &subscriptions)
+        
         searchCharacterNamePublisher
             .debounce(for: 0.3, queue: .main)
             .sink { [weak self] text in
@@ -93,6 +100,13 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
                     self?.getMarvelCharacters(query: text)
                 }
             }.store(in: &subscriptions)
+        
+        NetworkCheck.shared.isConnectedPublisher
+            .sink { [weak self] isConnected in
+                if !isConnected {
+                    self?.errorPublisher.send(URLError(.notConnectedToInternet))
+                }
+            }.store(in: &subscriptions)
     }
     
     // MARK: - Method
@@ -100,6 +114,10 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
     // query가 nil일 경우 기존 쿼리로 검색
     func getMarvelCharacters(query: String? = nil) {
         if isDonePagenation { return }
+        if !NetworkCheck.shared.isConnectedPublisher.value {
+            errorPublisher.send(URLError(.notConnectedToInternet))
+            return
+        }
         isFetchingCharacters = true
         collectionViewUpdatePublisher.send(1)
         let ts = String(Date().timeIntervalSince1970)
@@ -126,6 +144,7 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
         do {
             try networkManager.getMarvelCharacters(resource: resource)
         } catch {
+            errorPublisher.send(error)
             print(error.localizedDescription)
         }
     }
@@ -169,6 +188,7 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
                 }
                 
             } catch {
+                errorPublisher.send(error)
                 print(error.localizedDescription)
             }
         }

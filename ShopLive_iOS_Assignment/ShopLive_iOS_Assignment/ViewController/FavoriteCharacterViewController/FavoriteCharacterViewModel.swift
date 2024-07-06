@@ -11,6 +11,7 @@ protocol FavoriteCharacterViewModelProtocol {
     var favoriteMarvelCharacters: [FavoriteMarvelCharacter] { get set }
     var collectionViewUpdatePublisher: SLPassthroughSubject<Void> { get }
     var emptyFavoriteMarvelCharacterPublisher: SLCurrentValueSubject<Bool> { get }
+    var errorPublisher: SLPassthroughSubject<Error> { get }
     
     init(coreDataManager: CoreDataManagerProtocol)
     
@@ -28,6 +29,7 @@ final class FavoriteCharacterViewModel: FavoriteCharacterViewModelProtocol {
     }
     let collectionViewUpdatePublisher = SLPassthroughSubject<Void>()
     let emptyFavoriteMarvelCharacterPublisher = SLCurrentValueSubject<Bool>(true)
+    let errorPublisher = SLPassthroughSubject<Error>()
     private var subscriptions = Set<SLAnyCancellable>()
     
     init(coreDataManager: CoreDataManagerProtocol) {
@@ -44,6 +46,11 @@ final class FavoriteCharacterViewModel: FavoriteCharacterViewModelProtocol {
                 }
                 
                 favoriteMarvelCharacters = character
+            }.store(in: &subscriptions)
+        
+        coreDataManager.errorPublisher
+            .sink { [weak self] error in
+                self?.errorPublisher.send(error)
             }.store(in: &subscriptions)
     }
     

@@ -37,6 +37,9 @@
 		0EA198292C36A837001C07BD /* MockURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA198282C36A837001C07BD /* MockURLSession.swift */; };
 		0EA1982B2C36A85A001C07BD /* ShopLive_iOS_Assignment_NetworkManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA1982A2C36A85A001C07BD /* ShopLive_iOS_Assignment_NetworkManagerTests.swift */; };
 		0EA1982D2C36B4F2001C07BD /* ShopLive_iOS_Assignment_CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA1982C2C36B4F2001C07BD /* ShopLive_iOS_Assignment_CoreDataManagerTests.swift */; };
+		0EC40C632C3929680073C8C3 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC40C622C3929680073C8C3 /* AlertManager.swift */; };
+		0EC40C652C3929A00073C8C3 /* UIApplication+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC40C642C3929A00073C8C3 /* UIApplication+.swift */; };
+		0EC40C672C392C140073C8C3 /* NetworkCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EC40C662C392C140073C8C3 /* NetworkCheck.swift */; };
 		0EE26CE82C3795D0009F6BD8 /* SLPassthroughSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE26CE72C3795D0009F6BD8 /* SLPassthroughSubject.swift */; };
 		0EE26CEA2C37961A009F6BD8 /* SLCurrentValueSubject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE26CE92C37961A009F6BD8 /* SLCurrentValueSubject.swift */; };
 		0EE26CEC2C379649009F6BD8 /* SLSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE26CEB2C379649009F6BD8 /* SLSubscriber.swift */; };
@@ -94,6 +97,9 @@
 		0EA198282C36A837001C07BD /* MockURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLSession.swift; sourceTree = "<group>"; };
 		0EA1982A2C36A85A001C07BD /* ShopLive_iOS_Assignment_NetworkManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopLive_iOS_Assignment_NetworkManagerTests.swift; sourceTree = "<group>"; };
 		0EA1982C2C36B4F2001C07BD /* ShopLive_iOS_Assignment_CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopLive_iOS_Assignment_CoreDataManagerTests.swift; sourceTree = "<group>"; };
+		0EC40C622C3929680073C8C3 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
+		0EC40C642C3929A00073C8C3 /* UIApplication+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+.swift"; sourceTree = "<group>"; };
+		0EC40C662C392C140073C8C3 /* NetworkCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCheck.swift; sourceTree = "<group>"; };
 		0EE26CE72C3795D0009F6BD8 /* SLPassthroughSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLPassthroughSubject.swift; sourceTree = "<group>"; };
 		0EE26CE92C37961A009F6BD8 /* SLCurrentValueSubject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLCurrentValueSubject.swift; sourceTree = "<group>"; };
 		0EE26CEB2C379649009F6BD8 /* SLSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLSubscriber.swift; sourceTree = "<group>"; };
@@ -205,19 +211,10 @@
 		0E5A1D3F2C358B62003CE36C /* SearchCharacterViewController */ = {
 			isa = PBXGroup;
 			children = (
-				0E5A1D402C358B6F003CE36C /* View */,
 				0E5A1D322C35780D003CE36C /* SearchCharacterViewController.swift */,
 				0E5A1D4C2C35A6AD003CE36C /* SearchCharacterViewModel.swift */,
 			);
 			path = SearchCharacterViewController;
-			sourceTree = "<group>";
-		};
-		0E5A1D402C358B6F003CE36C /* View */ = {
-			isa = PBXGroup;
-			children = (
-				0E5A1D412C358B8D003CE36C /* CharacterCardCollectionViewCell.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		0E5A1D432C35902E003CE36C /* Extension */ = {
@@ -225,6 +222,7 @@
 			children = (
 				0E5A1D442C359034003CE36C /* View+.swift */,
 				0E5A1D4E2C35AC6C003CE36C /* Bundle+.swift */,
+				0EC40C642C3929A00073C8C3 /* UIApplication+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -235,6 +233,7 @@
 				0EE26CE62C379597009F6BD8 /* SLCombine */,
 				0E5A1D492C359938003CE36C /* Network */,
 				0E5A1D582C364898003CE36C /* CoreDataManager.swift */,
+				0EC40C622C3929680073C8C3 /* AlertManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -245,6 +244,7 @@
 				0E5A1D472C3598BB003CE36C /* NetworkManager.swift */,
 				0E5A1D4A2C359944003CE36C /* Resource.swift */,
 				0EA198282C36A837001C07BD /* MockURLSession.swift */,
+				0EC40C662C392C140073C8C3 /* NetworkCheck.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -292,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				0EA198202C368717001C07BD /* LoadingAnimationCollectionViewCell.swift */,
+				0E5A1D412C358B8D003CE36C /* CharacterCardCollectionViewCell.swift */,
 			);
 			path = CommonView;
 			sourceTree = "<group>";
@@ -451,6 +452,7 @@
 			files = (
 				0EE26CEC2C379649009F6BD8 /* SLSubscriber.swift in Sources */,
 				0E5A1D482C3598BB003CE36C /* NetworkManager.swift in Sources */,
+				0EC40C652C3929A00073C8C3 /* UIApplication+.swift in Sources */,
 				0E5A1D352C35781E003CE36C /* FavoriteCharacterViewController.swift in Sources */,
 				0E5A1D532C3646D0003CE36C /* FavoriteMarvelCharacter.xcdatamodeld in Sources */,
 				0E5A1D422C358B8D003CE36C /* CharacterCardCollectionViewCell.swift in Sources */,
@@ -459,6 +461,7 @@
 				0E5A1CFF2C357285003CE36C /* AppDelegate.swift in Sources */,
 				0EE26CEE2C379691009F6BD8 /* SLAnyCancellable.swift in Sources */,
 				0E5A1D572C364789003CE36C /* FavoriteMarvelCharacter+CoreDataProperties.swift in Sources */,
+				0EC40C672C392C140073C8C3 /* NetworkCheck.swift in Sources */,
 				0E5A1D562C364789003CE36C /* FavoriteMarvelCharacter+CoreDataClass.swift in Sources */,
 				0E5A1D312C35778C003CE36C /* MainTabbarController.swift in Sources */,
 				0E5A1D452C359034003CE36C /* View+.swift in Sources */,
@@ -466,6 +469,7 @@
 				0EA198212C368717001C07BD /* LoadingAnimationCollectionViewCell.swift in Sources */,
 				0E5A1D4D2C35A6AD003CE36C /* SearchCharacterViewModel.swift in Sources */,
 				0E5A1D382C3581B3003CE36C /* MarvelCharacter.swift in Sources */,
+				0EC40C632C3929680073C8C3 /* AlertManager.swift in Sources */,
 				0EE26CF02C37970B009F6BD8 /* Operators.swift in Sources */,
 				0E5A1D4F2C35AC6C003CE36C /* Bundle+.swift in Sources */,
 				0E5A1D5C2C366834003CE36C /* FavoriteCharacterViewModel.swift in Sources */,
