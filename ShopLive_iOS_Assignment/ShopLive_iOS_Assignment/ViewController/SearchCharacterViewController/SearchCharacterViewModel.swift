@@ -97,7 +97,7 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
     
     // MARK: - Method
     
-    /// query가 비었
+    // query가 nil일 경우 기존 쿼리로 검색
     func getMarvelCharacters(query: String? = nil) {
         if isDonePagenation { return }
         isFetchingCharacters = true
