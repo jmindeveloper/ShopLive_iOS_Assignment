@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import CryptoKit
+import SDWebImage
 
 protocol SearchCharacterViewModelProtocol {
     var marvelCharacters: [MarvelCharacter] { get set }
@@ -152,7 +153,7 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
                     self?.isSavingFavoriteCharacterPublisher.send(true)
                 }
                 let imageURL = URL(string: "\(character.thumbnail.path).\(character.thumbnail.extension)")
-                let imageData = try await networkManager.getImageData(url: imageURL)
+                let imageData = try await getCharacterThumbnailImageData(url: imageURL)
                 
                 let characterEntity = FavoriteMarvelCharacterEntity(
                     id: Int64(character.id),
@@ -170,6 +171,20 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
             } catch {
                 print(error.localizedDescription)
             }
+        }
+    }
+    
+    private func getCharacterThumbnailImageData(url: URL?) async throws -> Data {
+        guard let url = url else {
+            throw URLError(.badURL)
+        }
+        let cacheKey = SDWebImageManager.shared.cacheKey(for: url)
+        let chachedImage = SDImageCache.shared.imageFromCache(forKey: cacheKey)
+        
+        if let image = chachedImage, let imageData = image.jpegData(compressionQuality: 0.8) {
+            return imageData
+        } else {
+            return try await networkManager.getImageData(url: url)
         }
     }
     
