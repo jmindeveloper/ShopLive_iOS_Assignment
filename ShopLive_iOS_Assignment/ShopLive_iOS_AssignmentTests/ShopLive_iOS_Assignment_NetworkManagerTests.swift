@@ -75,7 +75,6 @@ final class ShopLive_iOS_Assignment_NetworkManagerTests: XCTestCase {
         // Then
         networkManager.characterPublisher
             .sink { characters in
-                print("asdfkljasdfj", characters)
                 XCTAssertEqual(characters.count, 1)
                 XCTAssertEqual(characters.first?.name, "아이언맨")
             }.store(in: &subscriptions)

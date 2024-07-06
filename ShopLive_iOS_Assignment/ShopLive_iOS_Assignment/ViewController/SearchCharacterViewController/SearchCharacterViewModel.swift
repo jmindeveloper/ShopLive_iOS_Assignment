@@ -36,7 +36,7 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
     // MARK: - Properties
     private let networkManager: NetworkManagerProtocol
     private let coreDataManager: CoreDataManagerProtocol
-    private var pagenationCount = 0
+    private var paginationCount = 0
     private let apiCallLimitCount = 10
     private var isDonePagenation: Bool = false
     var isFetchingCharacters: Bool = false
@@ -44,7 +44,7 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
     var marvelCharacters: [MarvelCharacter] = [] {
         didSet {
             if !marvelCharacters.isEmpty {
-                pagenationCount += 10
+                paginationCount += 10
             }
             isFetchingCharacters = false
             collectionViewUpdatePublisher.send(nil)
@@ -88,7 +88,7 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
             .sink { [weak self] text in
                 self?.isDonePagenation = false
                 if text.count >= 2 {
-                    self?.pagenationCount = 0
+                    self?.paginationCount = 0
                     self?.marvelCharacters.removeAll()
                     self?.getMarvelCharacters(query: text)
                 }
@@ -119,7 +119,7 @@ final class SearchCharacterViewModel: SearchCharacterViewModelProtocol {
                 "apikey": publicKey,
                 "hash": hashKey,
                 "limit": String(apiCallLimitCount),
-                "offset": String(pagenationCount)
+                "offset": String(paginationCount)
             ]
         )
         

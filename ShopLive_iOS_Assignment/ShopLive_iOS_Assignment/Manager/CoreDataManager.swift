@@ -92,9 +92,9 @@ final class CoreDataManager: CoreDataManagerProtocol {
         }
         
         if let oldestCharacter = oldestCharacter {
-            characters.removeAll { $0.id == oldestCharacter.id }
             persistentContainer.viewContext.delete(oldestCharacter)
             try persistentContainer.viewContext.save()
+            characters.removeAll { $0.id == oldestCharacter.id }
         }
         
         return characters
