@@ -24,6 +24,10 @@ class SLAnyCancellable {
     func store(in set: inout Set<SLAnyCancellable>) {
         set.insert(self)
     }
+    
+    deinit {
+        cancel()
+    }
 }
 
 extension SLAnyCancellable: Hashable {

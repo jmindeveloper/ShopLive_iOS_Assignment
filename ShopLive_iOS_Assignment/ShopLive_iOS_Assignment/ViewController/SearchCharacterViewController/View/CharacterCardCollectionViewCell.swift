@@ -34,6 +34,7 @@ final class CharacterCardCollectionViewCell: UICollectionViewCell {
         let view = LottieAnimationView(name: "loading_animation_lottie")
         view.loopMode = .loop
         view.backgroundColor = .clear
+        view.isHidden = true
         
         return view
     }()
@@ -101,6 +102,7 @@ final class CharacterCardCollectionViewCell: UICollectionViewCell {
     }
     
     func configureView(model: MarvelCharacter, isFavorite: Bool) {
+        loadingAnimationView.isHidden = false
         loadingAnimationView.play()
         if let imageURL = URL(string: "\(model.thumbnail.path).\(model.thumbnail.extension)") {
             thumbnailImageView.sd_setImage(with: imageURL) { [weak self] _, _, _, _ in
@@ -115,15 +117,11 @@ final class CharacterCardCollectionViewCell: UICollectionViewCell {
     }
     
     func configureView(coreDataModel: FavoriteMarvelCharacter) {
+        loadingAnimationView.isHidden = true
         if let imageData = coreDataModel.thumbnail {
             thumbnailImageView.image = UIImage(data: imageData)
         }
         titleLabel.text = coreDataModel.name
         descriptionLabel.text = coreDataModel.characterDescription
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        loadingAnimationView.isHidden = false
     }
 }
